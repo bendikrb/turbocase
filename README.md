@@ -18,6 +18,13 @@ the connects I want to be processed by turbocase that defines the height from th
 connector so an appropiate cutout can be made in the case. The rest of the shape of the connector is defined by the
 bounding box of the F.Fab layer of the connector.
 
+An example of a KiCAD PCB with a case outline on `User.6`:
+![KiCAD PCB with case outline](images/kicad.png)
+
+The generated case from this file:
+![OpenSCAD model of the generated case](images/scad.png)
+
+
 ## Installation
 
 ```shell-session
@@ -26,6 +33,10 @@ $ pip install turbocase
 
 ## Usage
 
+1. Create a case outline in the `User.6` layer using the line drawing tools.
+2. Add the `Height` property to the connector footprints that need to be in the case export
+3. Ensure the screw holes for the PCB are MountingHole footprints
+4. Run the turbocase tool to make an OpenSCAD file:
 ```shell-session
 $ turbocase project/project.kicad_pcb case.scad
 ```
