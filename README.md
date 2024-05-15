@@ -40,3 +40,19 @@ $ pip install turbocase
 ```shell-session
 $ turbocase project/project.kicad_pcb case.scad
 ```
+
+## Command line options
+
+```
+usage: turbocase [-h] [--layer LAYER] [--bottom BOTTOM] [--wall WALL] pcb output
+
+positional arguments:
+  pcb              Input kicad PCB file
+  output           Generated openSCAD case template
+
+options:
+  -h, --help       show this help message and exit
+  --layer LAYER    Layer with the case inner-outline [defaults to User.6]
+  --bottom BOTTOM  Bottom thickness in mm [default 1.2]
+  --wall WALL      Wall thickness in mm [default 1.2]
+```

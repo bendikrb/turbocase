@@ -9,9 +9,15 @@ def main():
     parser.add_argument('pcb', help='Input kicad PCB file')
     parser.add_argument('output', help='Generated openSCAD case template')
     parser.add_argument('--layer', help='Layer with the case inner-outline [defaults to User.6]', default='User.6')
+    parser.add_argument('--bottom', help='Bottom thickness in mm [default 1.2]', default=1.2, type=float)
+    parser.add_argument('--wall', help='Wall thickness in mm [default 1.2]', default=1.2, type=float)
     args = parser.parse_args()
 
     case = load_pcb(args.pcb, args.layer)
+
+    case.floor_thickness = args.bottom
+    case.wall_thickness = args.wall
+
     code = scad.generate(case)
     with open(args.output, 'w') as handle:
         handle.write(code)
