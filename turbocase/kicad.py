@@ -3,6 +3,7 @@ import os
 import sexpdata
 
 from turbocase.cases import Case, Connector
+from turbocase.vector import Vector
 
 
 class Sym:
@@ -147,13 +148,43 @@ def load_pcb(pcb_file, outline_layer=None):
         start = tuple(item['start'][:])
         end = tuple(item['end'][:])
 
-        if point == start:
-            new_point = end
-        else:
-            new_point = start
+        if item.name == 'gr_arc':
+            a = Vector(start[0], start[1])
+            b = Vector(end[0], end[1])
 
-        path.append(new_point)
-        point = new_point
+            mid = Vector(item['mid'][0], item['mid'][1])
+
+            # Figure out the center of the arc
+            v1 = (a + b) / 2 - mid
+            v2 = a - mid
+            cos_ang = (v1 * v2) / (v1.mag() * v2.mag())
+            radius = (v2.mag() / 2) / cos_ang
+
+            c = mid + (v1 / v1.mag()) * radius
+
+            points = [a, mid, b]
+            newpoints = [a]
+            for i in range(1, len(points)):
+                p1 = points[i - 1]
+                p2 = points[i]
+                dir = ((p1 + p2) / 2) - c
+                p = c + (dir / dir.mag()) * radius
+                newpoints.append(p)
+                newpoints.append(p2)
+
+            if start == point:
+                path.extend(newpoints[1:])
+            else:
+                path.extend(reversed(newpoints[:-1]))
+            point = path[-1]
+        else:
+            if point == start:
+                new_point = end
+            else:
+                new_point = start
+
+            path.append(new_point)
+            point = new_point
 
     result.inner_path = path
 
