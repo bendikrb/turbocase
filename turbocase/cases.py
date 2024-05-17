@@ -22,9 +22,11 @@ class Connector:
 
 class Part:
     def __init__(self):
-        self.script = None
         self.position = None
-        self.rotation = None
+        self.description = None
+
+        self.add = None
+        self.substract = None
 
 
 class Case:

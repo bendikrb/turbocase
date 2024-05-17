@@ -94,6 +94,15 @@ def generate(case):
                   f'    rotate([0, 0, {conn.position[2] + 180}])\n' \
                   f'        #connector({conn.bounds[0]},{conn.bounds[1]},{conn.bounds[2]},{conn.bounds[3]},{conn.prop_height + 0.2});\n\n'
 
+    for part in case.parts:
+        if part.substract is None:
+            continue
+        result += f'    // {part.description}\n'
+        result += f'    translate([{part.position[0]}, {part.position[1]}, {case.floor_thickness}])\n'
+        if len(part.position) == 3:
+            result += f'    rotate([0, 0, {part.position[2] + 180}])\n'
+        result += f'        {part.substract}\n'
+
     result += '    }\n\n'
 
     for mount in case.pcb_mount:
@@ -103,8 +112,13 @@ def generate(case):
         result += f'    mount({mount[1] + 0.2}, {mount[2]}, 5);\n\n'
 
     for part in case.parts:
+        if part.add is None:
+            continue
+        result += f'    // {part.description}\n'
         result += f'    translate([{part.position[0]}, {part.position[1]}, {case.floor_thickness}])\n'
-        result += f'        {part.script}\n'
+        if len(part.position) == 3:
+            result += f'    rotate([0, 0, {part.position[2] + 180}])\n'
+        result += f'        {part.add}\n'
 
     result += '}\n'
     return result

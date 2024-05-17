@@ -1,15 +1,15 @@
 (
   footprint
-  "BatteryHolder_18650"
+  "ScrewHole_M3"
   (version 20240108)
   (generator turbocase)
-  (descr "3D Printed 18650 battery holder")
+  (descr "")
   (attr board_only exclude_from_pos_files exclude_from_bom allow_missing_courtyard)
   (zone_connect 0)
   (
-    fp_rect
-    (start 0 0)
-    (end 20 72.0)
+    fp_circle
+    (center 0 0)
+    (end 0 1.5)
     (
       stroke
       (width 0.2)
@@ -17,12 +17,12 @@
     )
     (fill none)
     (layer "User.6")
-    (uuid "cf95be58-0b9a-403a-bb8f-3afb90f79126")
+    (uuid "f173c8e7-a96c-4740-b8db-2b3893cc41d7")
   )
   (
-    fp_rect
-    (start 1 3.5)
-    (end 19 68.5)
+    fp_circle
+    (center 0 0)
+    (end 0 2.8)
     (
       stroke
       (width 0.2)
@@ -30,6 +30,6 @@
     )
     (fill none)
     (layer "User.6")
-    (uuid "8a03c31a-c479-4301-af52-7133319e81fb")
+    (uuid "ac2f44a4-5772-4b28-aede-bfb023be09b3")
   )
 )

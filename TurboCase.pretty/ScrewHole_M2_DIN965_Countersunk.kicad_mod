@@ -1,15 +1,15 @@
 (
   footprint
-  "BatteryHolder_18650"
+  "ScrewHole_M2_DIN965_Countersunk"
   (version 20240108)
   (generator turbocase)
-  (descr "3D Printed 18650 battery holder")
+  (descr "Hole for an M2 DIN965 standard countersunk screw")
   (attr board_only exclude_from_pos_files exclude_from_bom allow_missing_courtyard)
   (zone_connect 0)
   (
-    fp_rect
-    (start 0 0)
-    (end 20 72.0)
+    fp_circle
+    (center 0 0)
+    (end 0 1.0)
     (
       stroke
       (width 0.2)
@@ -17,12 +17,12 @@
     )
     (fill none)
     (layer "User.6")
-    (uuid "cf95be58-0b9a-403a-bb8f-3afb90f79126")
+    (uuid "17d6804d-523b-4265-ab1a-fee8bcbbf6b9")
   )
   (
-    fp_rect
-    (start 1 3.5)
-    (end 19 68.5)
+    fp_circle
+    (center 0 0)
+    (end 0 1.9)
     (
       stroke
       (width 0.2)
@@ -30,6 +30,6 @@
     )
     (fill none)
     (layer "User.6")
-    (uuid "8a03c31a-c479-4301-af52-7133319e81fb")
+    (uuid "fb873cbd-0c72-4502-8129-bedc18eb0957")
   )
 )

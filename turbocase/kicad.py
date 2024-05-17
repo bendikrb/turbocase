@@ -1,3 +1,4 @@
+import inspect
 import os
 import sys
 from functools import total_ordering
@@ -7,6 +8,21 @@ import sexpdata
 from turbocase.cases import Case, Connector, Part
 from turbocase.vector import Vector
 import turbocase.parts
+from turbocase.parts import *
+
+
+def get_all_parts():
+    result = {}
+    modules = inspect.getmembers(turbocase.parts, predicate=inspect.ismodule)
+    for name, mod in modules:
+        defines = dict([(name, cls) for name, cls in mod.__dict__.items() if isinstance(cls, type)])
+        for name in defines:
+            if name == 'BasePart':
+                continue
+            if defines[name]._hide == name:
+                continue
+            result[name] = defines[name]
+    return result
 
 
 class Sym:
@@ -271,15 +287,6 @@ def shape_bounds(primitives):
     return min_x, min_y, max_x, max_y
 
 
-def unindent(raw):
-    raw = raw.lstrip('\n')
-    indent = len(raw) - len(raw.lstrip())
-    result = []
-    for line in raw.splitlines():
-        result.append(line[indent:])
-    return '\n'.join(result)
-
-
 def load_pcb(pcb_file, outline_layer=None):
     if outline_layer is None:
         outline_layer = 'User.6'
@@ -374,18 +381,24 @@ def load_pcb(pcb_file, outline_layer=None):
     result.max_connector_height = max_height
 
     modules = set()
+    partlib = get_all_parts()
 
     for part in parts:
         part_id = part[0].split(':')[1]
-        if not hasattr(turbocase.parts, part_id):
-            sys.stderr.write(f"Unknown part: {part.name}\n")
+        if part_id not in partlib:
+            sys.stderr.write(f"Unknown part: {part_id}\n")
             continue
+        partcls = partlib[part_id]
+        modules.add(partcls.get_module())
 
-        func = getattr(turbocase.parts, part_id)
-        modules.add(unindent(func.__doc__))
+        inst = partcls()
 
         p = Part()
-        p.script = func()
+        p.description = inst.description
+        if inst._add:
+            p.add = inst.insert(part)
+        if inst._substract:
+            p.substract = inst.substract(part)
         p.position = part.attr['at'][:]
 
         result.parts.append(p)
