@@ -62,6 +62,7 @@ def generate(case):
         result += m + "\n"
 
     center = case.get_center()
+    result += f'scale([1, -1, 1])\n'
     result += f'translate([-{center[0]}, -{center[1]}, 0]) ' + '{\n'
 
     result += f'    standoff_height = 5;\n'
