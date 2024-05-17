@@ -371,7 +371,7 @@ def load_pcb(pcb_file, outline_layer=None):
                         shapes.append(line)
 
         if len(shapes) == 0:
-            sys.stderr.write("Could not process connector {ref}: no graphics on the F.Fab layer found\n")
+            sys.stderr.write(f"Could not process connector {ref}: no graphics on the F.Fab layer found\n")
             continue
 
         c = Connector()
