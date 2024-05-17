@@ -24,7 +24,6 @@ An example of a KiCAD PCB with a case outline on `User.6`:
 The generated case from this file:
 ![OpenSCAD model of the generated case](images/scad.png)
 
-
 ## Installation
 
 ```shell-session
@@ -37,9 +36,17 @@ $ pip install turbocase
 2. Add the `Height` property to the connector footprints that need to be in the case export
 3. Ensure the screw holes for the PCB are MountingHole footprints
 4. Run the turbocase tool to make an OpenSCAD file:
+
 ```shell-session
 $ turbocase project/project.kicad_pcb case.scad
 ```
+
+## Footprints
+
+TurboCase can automatically add prefab structures to the generated case by using the included KiCad library.
+The TurboCase.pretty folder in this repository is the footprint library that defines custom objects to add to the
+design of your case. The tool will detect any footprints that start with `TurboCase:` and append the correct module
+from `parts.py` into the final OpenSCAD file.
 
 ## Command line options
 
