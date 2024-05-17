@@ -1,9 +1,11 @@
 import os
+import sys
 
 import sexpdata
 
-from turbocase.cases import Case, Connector
+from turbocase.cases import Case, Connector, Part
 from turbocase.vector import Vector
+import turbocase.parts
 
 
 class Sym:
@@ -14,7 +16,7 @@ class Sym:
         self.values = []
         self.property = {}
 
-        arrays = ['pad', 'property', 'fp_text', 'fp_line', 'fp_rect', 'xy']
+        arrays = ['pad', 'property', 'fp_text', 'fp_line', 'fp_rect', 'fp_circle', 'xy']
 
         for part in symbol:
             if isinstance(part, sexpdata.Symbol):
@@ -104,6 +106,15 @@ def shape_bounds(primitives):
     return min_x, min_y, max_x, max_y
 
 
+def unindent(raw):
+    raw = raw.lstrip('\n')
+    indent = len(raw) - len(raw.lstrip())
+    result = []
+    for line in raw.splitlines():
+        result.append(line[indent:])
+    return '\n'.join(result)
+
+
 def load_pcb(pcb_file, outline_layer=None):
     if outline_layer is None:
         outline_layer = 'User.6'
@@ -116,6 +127,7 @@ def load_pcb(pcb_file, outline_layer=None):
     outline_shapes = []
     mountingholes = []
     connectors = []
+    parts = []
 
     for symbol in pcb:
         if not isinstance(symbol, list):
@@ -137,11 +149,13 @@ def load_pcb(pcb_file, outline_layer=None):
                 footprint = Sym(symbol)
 
                 if 'MountingHole' in footprint[0]:
-                    mountingholes.append(Sym(symbol))
-
-                for prop in footprint['property']:
-                    if len(prop) == 2 and prop[0] == 'Height':
-                        connectors.append(footprint)
+                    mountingholes.append(footprint)
+                elif 'TurboCase' in footprint[0]:
+                    parts.append(footprint)
+                else:
+                    for prop in footprint['property']:
+                        if len(prop) == 2 and prop[0] == 'Height':
+                            connectors.append(footprint)
 
     outline = sort_outline(outline_shapes)
 
@@ -209,11 +223,17 @@ def load_pcb(pcb_file, outline_layer=None):
         center = hole['at'][:]
 
         drill = 0
-        space = 0
         for pad in hole['pad']:
             if pad['drill'][0] > drill:
                 drill = pad['drill'][0]
-                space = pad['size'][0]
+
+        space = drill + 2
+        for circle in hole['fp_circle']:
+            if circle['layer'][0] != 'F.CrtYd':
+                continue
+            diam = max(circle['end'][0], circle['end'][1]) * 2
+            if diam > space:
+                space = diam
 
         result.pcb_mount.append((center, drill, space, hole.property['Reference']))
 
@@ -241,5 +261,23 @@ def load_pcb(pcb_file, outline_layer=None):
         c.position = item['at'][:]
         result.connectors.append(c)
     result.max_connector_height = max_height
+
+    modules = set()
+
+    for part in parts:
+        part_id = part[0].split(':')[1]
+        if not hasattr(turbocase.parts, part_id):
+            sys.stderr.write(f"Unknown part: {part.name}\n")
+            continue
+
+        func = getattr(turbocase.parts, part_id)
+        modules.add(unindent(func.__doc__))
+
+        p = Part()
+        p.script = func()
+        p.position = part.attr['at'][:]
+
+        result.parts.append(p)
+    result.modules = list(modules)
 
     return result

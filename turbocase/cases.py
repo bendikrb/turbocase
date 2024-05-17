@@ -20,6 +20,13 @@ class Connector:
         return self.prop_height
 
 
+class Part:
+    def __init__(self):
+        self.script = None
+        self.position = None
+        self.rotation = None
+
+
 class Case:
     connectors: list[Connector]
 
@@ -32,6 +39,9 @@ class Case:
 
         self.max_connector_height = 0
         self.connectors = []
+
+        self.modules = []
+        self.parts = []
 
     def get_inner_bounds(self):
         min_x = self.inner_path[0][0]

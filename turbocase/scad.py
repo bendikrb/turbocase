@@ -58,6 +58,9 @@ def generate(case):
 
     result = _template + "\n"
 
+    for m in case.modules:
+        result += m + "\n"
+
     center = case.get_center()
     result += f'translate([-{center[0]}, -{center[1]}, 0]) ' + '{\n'
 
@@ -85,6 +88,10 @@ def generate(case):
         result += f'    translate([{mount[0][0]}, {mount[0][1]}, {case.floor_thickness}])\n'
         # This currently creates correct holes for the M3 threaded metal inserts I have. Not generic
         result += f'    mount({mount[1] + 0.2}, {mount[2]}, 5);\n\n'
+
+    for part in case.parts:
+        result += f'    translate([{part.position[0]}, {part.position[1]}, {case.floor_thickness}])\n'
+        result += f'        {part.script}\n'
 
     result += '}\n'
     return result
