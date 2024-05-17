@@ -1,0 +1,156 @@
+(footprint "BatteryHolder_18650"
+	(version 20240108)
+	(generator "pcbnew")
+	(generator_version "8.0")
+	(layer "F.Cu")
+	(descr "Printed 18650 protected cell holder")
+	(tags "18650")
+	(property "Reference" "TC**"
+		(at 3.8 2.55 0)
+		(unlocked yes)
+		(layer "F.SilkS")
+		(hide yes)
+		(uuid "7cd7dce4-3930-4075-8e71-f09d69a71353")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.1)
+			)
+		)
+	)
+	(property "Value" "BatteryHolder_18650"
+		(at 3.5 4.5 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(uuid "43a5a735-5302-4206-9ab8-d5857bc8bd3f")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Footprint" ""
+		(at 3.5 3.5 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "37fc3055-5df8-41eb-8250-7732cc6ee10a")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Datasheet" ""
+		(at 3.5 3.5 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "db68c3f8-f39a-4ef7-950d-79b3c2a5c2ce")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Description" "Printed 18650 protected cell holder"
+		(at 3.5 3.5 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "dbe56396-d0e9-40ae-9de8-08a3e82a908d")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Height" "10"
+		(at 0 0 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "ad185935-e529-4bef-a82c-759cf0ab6338")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(zone_connect 0)
+	(attr board_only exclude_from_pos_files exclude_from_bom allow_missing_courtyard)
+	(fp_rect
+		(start 0 0)
+		(end 20 74)
+		(stroke
+			(width 0.1)
+			(type default)
+		)
+		(fill none)
+		(layer "User.2")
+		(uuid "28f491b0-93b8-4050-877a-d2313bba5a29")
+	)
+	(fp_rect
+		(start 1 3.5)
+		(end 19 70.5)
+		(stroke
+			(width 0.1)
+			(type default)
+		)
+		(fill none)
+		(layer "User.2")
+		(uuid "03007158-5cfe-4872-ba30-86994f00e43f")
+	)
+	(fp_rect
+		(start 4.125 2.15)
+		(end 15.575 2.65)
+		(stroke
+			(width 0.1)
+			(type default)
+		)
+		(fill none)
+		(layer "User.2")
+		(uuid "614d3186-8a12-4d82-8cb1-1254a1246737")
+	)
+	(fp_rect
+		(start 4.475 71.4)
+		(end 15.925 71.9)
+		(stroke
+			(width 0.1)
+			(type default)
+		)
+		(fill none)
+		(layer "User.2")
+		(uuid "b82bc976-37c9-43a1-b8ad-94e8b3066faa")
+	)
+	(fp_text user "${REFERENCE}"
+		(at 3.5 6 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(uuid "5d96f2a0-8e18-4a50-9039-695f4adcc27a")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(fp_text user "18650"
+		(at 8.45 31.65 -90)
+		(unlocked yes)
+		(layer "User.2")
+		(uuid "239a7f64-f875-44e3-836d-51b4cf9c0a09")
+		(effects
+			(font
+				(size 3 3)
+				(thickness 0.15)
+			)
+			(justify left bottom)
+		)
+	)
+)
