@@ -36,6 +36,7 @@ class Case:
         self.pcb_thickness = 1.6
         self.floor_thickness = 1.2
         self.wall_thickness = 1.2
+        self.standoff_height = 5
 
         self.cutouts = []
 
@@ -44,6 +45,7 @@ class Case:
 
         self.modules = []
         self.parts = []
+        self.max_part_height = 0
 
     def get_inner_bounds(self):
         min_x = self.inner_path[0][0]

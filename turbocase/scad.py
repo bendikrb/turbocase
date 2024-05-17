@@ -65,10 +65,10 @@ def generate(case):
     result += f'scale([1, -1, 1])\n'
     result += f'translate([-{center[0]}, -{center[1]}, 0]) ' + '{\n'
 
-    result += f'    standoff_height = 5;\n'
+    result += f'    standoff_height = {case.standoff_height};\n'
     result += f'    floor_height = {case.floor_thickness};\n'
     result += f'    pcb_thickness = {case.pcb_thickness};\n'
-    result += f'    inner_height = standoff_height + pcb_thickness + {case.max_connector_height};\n'
+    result += f'    inner_height = standoff_height + pcb_thickness + {max(case.max_connector_height, case.max_part_height - case.standoff_height - case.pcb_thickness)};\n'
     result += f'    pcb_top = floor_height + standoff_height + pcb_thickness;\n'
     result += '\n'
     result += '    difference() {\n'

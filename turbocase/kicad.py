@@ -389,6 +389,10 @@ def load_pcb(pcb_file, outline_layer=None):
         p.position = part.attr['at'][:]
 
         result.parts.append(p)
+
+        if 'Height' in part.property:
+            ph = float(part.property['Height'])
+            result.max_part_height = max(result.max_part_height, ph)
     result.modules = list(modules)
 
     return result
