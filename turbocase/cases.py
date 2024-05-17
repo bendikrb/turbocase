@@ -37,6 +37,8 @@ class Case:
         self.floor_thickness = 1.2
         self.wall_thickness = 1.2
 
+        self.cutouts = []
+
         self.max_connector_height = 0
         self.connectors = []
 

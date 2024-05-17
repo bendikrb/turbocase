@@ -75,6 +75,18 @@ def generate(case):
     result += '            ' + _make_scad_polygon(case.inner_path)
     result += '        }\n\n'
 
+    for shape in case.cutouts:
+        if shape.is_circle:
+            result += f'    translate([{shape.point[0]}, {shape.point[1]}, -1])\n'
+            result += f'        #cylinder(floor_height+2, {shape.radius}, {shape.radius});\n'
+        elif shape.is_rect:
+            result += f'    translate([{shape.point[0]}, {shape.point[1]}, 0])\n'
+            result += f'        #cube([{shape.width}, {shape.height}, floor_height + 2], center=true);\n'
+        else:
+            result += f'    translate([0, 0, -1])\n'
+            result += f'    #linear_extrude(floor_height+2) \n'
+            result += f'        {_make_scad_polygon(shape.path())}\n'
+
     for conn in sorted(case.connectors, key=lambda x: x.reference):
         result += f'    // {conn.reference} {conn.footprint} {conn.description}\n'
         result += f'    translate([{conn.position[0]}, {conn.position[1]}, pcb_top])\n' \
