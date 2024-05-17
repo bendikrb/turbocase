@@ -370,6 +370,10 @@ def load_pcb(pcb_file, outline_layer=None):
                     if line['layer'][0] == 'F.Fab':
                         shapes.append(line)
 
+        if len(shapes) == 0:
+            sys.stderr.write("Could not process connector {ref}: no graphics on the F.Fab layer found\n")
+            continue
+
         c = Connector()
         c.prop_height = height
         c.reference = ref
