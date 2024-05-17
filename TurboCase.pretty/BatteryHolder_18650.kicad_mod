@@ -69,7 +69,7 @@
 			)
 		)
 	)
-	(property "Height" "10"
+	(property "Height" "19"
 		(at 0 0 0)
 		(unlocked yes)
 		(layer "F.Fab")
