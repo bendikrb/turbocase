@@ -1,4 +1,5 @@
 from turbocase.parts import BasePart
+from turbocase.parts.shape import Rect
 
 
 class BatteryHolder_Cylindrical(BasePart):
@@ -36,8 +37,8 @@ class BatteryHolder_Cylindrical(BasePart):
         off_v = 1
         length = cls.length / 10
         return [
-            ('rect', 'User.6', {'start': [0, 0], 'end': [cls.diameter + (2 * off_v), length + (2 * off_h)]}),
-            ('rect', 'User.6', {'start': [off_v, off_h], 'end': [off_v + cls.diameter, off_h + length]})
+            Rect('User.6', [0, 0], [cls.diameter + (2 * off_v), length + (2 * off_h)]),
+            Rect('User.6', [off_v, off_h], [off_v + cls.diameter, off_h + length]),
         ]
 
 

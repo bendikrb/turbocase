@@ -1,4 +1,5 @@
 from turbocase.parts import BasePart
+from turbocase.parts.shape import Circle
 
 
 class ScrewHole(BasePart):
@@ -24,15 +25,15 @@ class ScrewHole(BasePart):
     @classmethod
     def make_footprint(cls):
         return [
-            ('circle', 'User.6', {'center': [0, 0], 'end': [0, cls.hole_diameter / 2]}),
-            ('circle', 'User.6', {'center': [0, 0], 'end': [0, cls.head_diameter / 2]}),
+            Circle('User.6', [0, 0], [0, cls.hole_diameter / 2]),
+            Circle('User.6', [0, 0], [0, cls.head_diameter / 2]),
         ]
 
 
 class ScrewHoleCountersunk(ScrewHole):
     """
     module ScrewHoleCountersunk_substract(hole_diameter, head_diameter, head_height) {
-        translate([0,0,-1.2])
+        translate([0,0,-head_height+1.2])
             cylinder(head_height, (hole_diameter/2)+0.2, (head_diameter/2)+0.2, $fn=32);
 
         translate([0,0, -10])
@@ -55,10 +56,25 @@ class ScrewHoleCountersunk(ScrewHole):
     head_diameter = 0
     head_height = 0
 
+    @classmethod
+    def make_footprint(cls):
+        return [
+            Circle('User.6', [0, 0], [0, cls.hole_diameter / 2]),
+            Circle('User.6', [0, 0], [0, cls.head_diameter / 2]),
+            Circle('User.6', [0, 0], [0, cls.head_diameter / 2 + 1.2]),
+        ]
 
-class ScrewHole_M3(ScrewHole):
+
+class ScrewHole_M3_DIN967(ScrewHole):
+    description = "Hole for an M3 DIN967 standard pan-head screw (optical drive screw)"
     hole_diameter = 3
-    head_diameter = 5.6
+    head_diameter = 7
+
+
+class ScrewHole_M4_DIN967(ScrewHole):
+    description = "Hole for an M4 DIN967 standard pan-head screw"
+    hole_diameter = 4
+    head_diameter = 9
 
 
 class ScrewHole_M5_DIN965_Countersunk(ScrewHoleCountersunk):

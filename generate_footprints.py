@@ -25,49 +25,10 @@ def make_footprint(part):
     footprint.append([Symbol('zone_connect'), 0])
 
     salt = 0
-    for graphic, layer, kwargs in part.make_footprint():
+    for shape in part.make_footprint():
         salt += 1
-        if graphic == 'line':
-            footprint.append((
-                Symbol('fp_line'),
-                (Symbol('start'), *kwargs['start']),
-                (Symbol('end'), *kwargs['end']),
-                (Symbol('stroke'),
-                 (Symbol('width'), 0.2),
-                 (Symbol('type'), Symbol('default')),
-                 ),
-                (Symbol('layer'), layer),
-                (Symbol('uuid'), make_uuid(part.__name__, salt)),
-            ))
-        elif graphic == 'rect':
-            footprint.append((
-                Symbol('fp_rect'),
-                (Symbol('start'), *kwargs['start']),
-                (Symbol('end'), *kwargs['end']),
-                (Symbol('stroke'),
-                 (Symbol('width'), 0.2),
-                 (Symbol('type'), Symbol('default')),
-                 ),
-                (Symbol('fill'), Symbol('none')),
-                (Symbol('layer'), layer),
-                (Symbol('uuid'), make_uuid(part.__name__, salt)),
-            ))
-        elif graphic == 'circle':
-            footprint.append((
-                Symbol('fp_circle'),
-                (Symbol('center'), *kwargs['center']),
-                (Symbol('end'), *kwargs['end']),
-                (Symbol('stroke'),
-                 (Symbol('width'), 0.2),
-                 (Symbol('type'), Symbol('default')),
-                 ),
-                (Symbol('fill'), Symbol('none')),
-                (Symbol('layer'), layer),
-                (Symbol('uuid'), make_uuid(part.__name__, salt)),
-            ))
-
-        else:
-            raise ValueError(f"Unknown primitive '{graphic}'")
+        graphic = shape.graphic(make_uuid(part.__name__, salt))
+        footprint.append(graphic)
     return footprint
 
 
@@ -77,7 +38,7 @@ def main():
     for name, mod in modules:
         defines = dict([(name, cls) for name, cls in mod.__dict__.items() if isinstance(cls, type)])
         for name in defines:
-            if name == 'BasePart':
+            if name in ['BasePart', 'Rect', 'Circle', 'Shape', 'Line', 'Symbol', 'Arc']:
                 continue
             if defines[name]._hide == name:
                 continue

@@ -32,4 +32,17 @@
     (layer "User.6")
     (uuid "89944bc8-05dc-44de-b6a4-94e19e6bacab")
   )
+  (
+    fp_circle
+    (center 0 0)
+    (end 0 3.55)
+    (
+      stroke
+      (width 0.2)
+      (type default)
+    )
+    (fill none)
+    (layer "User.6")
+    (uuid "5ed52e8f-ce18-4a38-a19d-2179b77ebb44")
+  )
 )

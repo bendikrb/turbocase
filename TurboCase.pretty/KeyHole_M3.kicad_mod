@@ -1,0 +1,109 @@
+(
+  footprint
+  "KeyHole_M3"
+  (version 20240108)
+  (generator turbocase)
+  (descr "")
+  (attr board_only exclude_from_pos_files exclude_from_bom allow_missing_courtyard)
+  (zone_connect 0)
+  (
+    fp_arc
+    (start -3.4 0)
+    (mid 0 -3.4)
+    (end 3.4 0)
+    (
+      stroke
+      (width 0.2)
+      (type default)
+    )
+    (layer "User.6")
+    (uuid "a7c76c90-441c-42ef-8025-a29e5b7ff1d5")
+  )
+  (
+    fp_arc
+    (start -3.4 5.6)
+    (mid 0 9.0)
+    (end 3.4 5.6)
+    (
+      stroke
+      (width 0.2)
+      (type default)
+    )
+    (layer "User.6")
+    (uuid "fc9836f5-69aa-41a9-af36-4faba8306a8f")
+  )
+  (
+    fp_line
+    (start -3.4 0)
+    (end -3.4 5.6)
+    (
+      stroke
+      (width 0.2)
+      (type default)
+    )
+    (layer "User.6")
+    (uuid "252a3cd3-1327-4975-ae85-99dbea8c9975")
+  )
+  (
+    fp_line
+    (start 3.4 0)
+    (end 3.4 5.6)
+    (
+      stroke
+      (width 0.2)
+      (type default)
+    )
+    (layer "User.6")
+    (uuid "f6a77638-219b-4c0a-adc9-d16240364e28")
+  )
+  (
+    fp_arc
+    (start -1.5 0)
+    (mid 0 -1.5)
+    (end 1.5 0)
+    (
+      stroke
+      (width 0.2)
+      (type default)
+    )
+    (layer "User.6")
+    (uuid "875c16f9-b0ca-42d6-b207-b11ef00d6901")
+  )
+  (
+    fp_line
+    (start -1.5 0)
+    (end -1.5 5.8)
+    (
+      stroke
+      (width 0.2)
+      (type default)
+    )
+    (layer "User.6")
+    (uuid "6e749331-649b-4d18-b0ee-277a514d163e")
+  )
+  (
+    fp_line
+    (start 1.5 0)
+    (end 1.5 5.8)
+    (
+      stroke
+      (width 0.2)
+      (type default)
+    )
+    (layer "User.6")
+    (uuid "d0665855-b2e9-493c-a0e3-9e66b8b1bfa3")
+  )
+  (
+    fp_circle
+    (center 0 5.6)
+    (end 2.8 5.8)
+    (
+      stroke
+      (width 0.2)
+      (type default)
+    )
+    (fill none)
+    (layer "User.6")
+    (uuid "33353f30-8bd2-4e86-bde6-14eedc8a6fa0")
+  )
+)

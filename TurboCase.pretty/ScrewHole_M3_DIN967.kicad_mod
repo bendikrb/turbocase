@@ -1,15 +1,15 @@
 (
   footprint
-  "ScrewHole_M5_DIN965_Countersunk"
+  "ScrewHole_M3_DIN967"
   (version 20240108)
   (generator turbocase)
-  (descr "Hole for an M5 DIN965 standard countersunk screw")
+  (descr "Hole for an M3 DIN967 standard pan-head screw (optical drive screw)")
   (attr board_only exclude_from_pos_files exclude_from_bom allow_missing_courtyard)
   (zone_connect 0)
   (
     fp_circle
     (center 0 0)
-    (end 0 2.5)
+    (end 0 1.5)
     (
       stroke
       (width 0.2)
@@ -17,12 +17,12 @@
     )
     (fill none)
     (layer "User.6")
-    (uuid "f47de029-3bb4-4e51-9947-3039dfd0cde3")
+    (uuid "21309bed-aa32-4d49-9158-be3592625d6a")
   )
   (
     fp_circle
     (center 0 0)
-    (end 0 4.6)
+    (end 0 3.5)
     (
       stroke
       (width 0.2)
@@ -30,19 +30,6 @@
     )
     (fill none)
     (layer "User.6")
-    (uuid "3f63f80f-c0de-4c2c-acd3-186024452803")
-  )
-  (
-    fp_circle
-    (center 0 0)
-    (end 0 5.8)
-    (
-      stroke
-      (width 0.2)
-      (type default)
-    )
-    (fill none)
-    (layer "User.6")
-    (uuid "cd010ebc-7f3c-4636-a077-7d837ed3be67")
+    (uuid "6b8702d7-4c91-4254-9727-0027fd349e50")
   )
 )

@@ -1,15 +1,15 @@
 (
   footprint
-  "ScrewHole_M3"
+  "ScrewHole_M4_DIN967"
   (version 20240108)
   (generator turbocase)
-  (descr "")
+  (descr "Hole for an M4 DIN967 standard pan-head screw")
   (attr board_only exclude_from_pos_files exclude_from_bom allow_missing_courtyard)
   (zone_connect 0)
   (
     fp_circle
     (center 0 0)
-    (end 0 1.5)
+    (end 0 2.0)
     (
       stroke
       (width 0.2)
@@ -17,12 +17,12 @@
     )
     (fill none)
     (layer "User.6")
-    (uuid "f173c8e7-a96c-4740-b8db-2b3893cc41d7")
+    (uuid "7c5c4d31-4106-4a9e-87c9-17720ca2cb32")
   )
   (
     fp_circle
     (center 0 0)
-    (end 0 2.8)
+    (end 0 4.5)
     (
       stroke
       (width 0.2)
@@ -30,6 +30,6 @@
     )
     (fill none)
     (layer "User.6")
-    (uuid "ac2f44a4-5772-4b28-aede-bfb023be09b3")
+    (uuid "a7400be6-a6f6-40bd-86b6-d05a65a5a5fb")
   )
 )

@@ -1,4 +1,4 @@
-__all__ = ["batteryholder", "screws"]
+__all__ = ["batteryholder", "screws", "keyhole"]
 
 
 class BasePart:
