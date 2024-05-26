@@ -28,6 +28,8 @@ class Part:
         self.add = None
         self.substract = None
 
+        self.offset_pcb = False
+
 
 class Case:
     connectors: list[Connector]

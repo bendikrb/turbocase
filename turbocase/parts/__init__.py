@@ -1,10 +1,15 @@
-__all__ = ["batteryholder", "screws", "keyhole"]
+__all__ = ["batteryholder", "screws", "keyhole", "cutout"]
 
 
 class BasePart:
     description = ""
     _substract = False
     _add = True
+    _hide = ''
+
+    # If False the ground offset of the OpenSCAD part will be floor_thickness, if True it will
+    # be floor_thickness+pcb_height+pcb_thickness
+    _pcb_height = False
 
     @classmethod
     def get_module(cls):

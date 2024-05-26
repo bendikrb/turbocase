@@ -404,6 +404,7 @@ def load_pcb(pcb_file, outline_layer=None):
         if inst._substract:
             p.substract = inst.substract(part)
         p.position = part.attr['at'][:]
+        p.offset_pcb = inst._pcb_height
 
         result.parts.append(p)
 

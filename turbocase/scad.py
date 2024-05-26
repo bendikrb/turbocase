@@ -97,8 +97,11 @@ def generate(case):
     for part in case.parts:
         if part.substract is None:
             continue
+        z = case.floor_thickness
+        if part.offset_pcb:
+            z = 'pcb_top'
         result += f'    // {part.description}\n'
-        result += f'    translate([{part.position[0]}, {part.position[1]}, {case.floor_thickness}])\n'
+        result += f'    translate([{part.position[0]}, {part.position[1]}, {z}])\n'
         if len(part.position) == 3:
             result += f'    rotate([0, 0, {part.position[2] + 180}])\n'
         result += f'        {part.substract}\n'
@@ -115,7 +118,10 @@ def generate(case):
         if part.add is None:
             continue
         result += f'    // {part.description}\n'
-        result += f'    translate([{part.position[0]}, {part.position[1]}, {case.floor_thickness}])\n'
+        z = case.floor_thickness
+        if part.offset_pcb:
+            z = 'pcb_top'
+        result += f'    translate([{part.position[0]}, {part.position[1]}, {z}])\n'
         if len(part.position) == 3:
             result += f'    rotate([0, 0, {part.position[2] + 180}])\n'
         result += f'        {part.add}\n'

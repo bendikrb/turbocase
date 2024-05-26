@@ -1,0 +1,34 @@
+(
+  footprint
+  "Cutout_TypeC"
+  (version 20240108)
+  (generator turbocase)
+  (descr "")
+  (attr board_only exclude_from_pos_files exclude_from_bom allow_missing_courtyard)
+  (zone_connect 0)
+  (
+    fp_rect
+    (start -5.0 -5.0)
+    (end 5.0 5.0)
+    (
+      stroke
+      (width 0.2)
+      (type default)
+    )
+    (fill none)
+    (layer "User.6")
+    (uuid "e7c588df-4cf2-43ce-8ec3-11dd94bce14a")
+  )
+  (
+    fp_line
+    (start -10 0)
+    (end 10 0)
+    (
+      stroke
+      (width 0.2)
+      (type default)
+    )
+    (layer "User.6")
+    (uuid "6c80a83f-6cf4-42b6-937b-580efd39d06c")
+  )
+)
