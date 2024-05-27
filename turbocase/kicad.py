@@ -320,7 +320,7 @@ def load_pcb(pcb_file, outline_layer=None):
             if name == 'footprint':
                 footprint = Sym(symbol)
 
-                if 'MountingHole' in footprint[0]:
+                if ':MountingHole_' in footprint[0]:
                     mountingholes.append(footprint)
                 elif 'TurboCase' in footprint[0]:
                     parts.append(footprint)
@@ -341,17 +341,22 @@ def load_pcb(pcb_file, outline_layer=None):
         center = hole['at'][:]
 
         drill = 0
+        drill_space = 0
         for pad in hole['pad']:
             if pad['drill'][0] > drill:
                 drill = pad['drill'][0]
+                drill_space = pad['size'][0]
 
         space = drill + 2
-        for circle in hole['fp_circle']:
-            if circle['layer'][0] != 'F.CrtYd':
-                continue
-            diam = max(circle['end'][0], circle['end'][1]) * 2
-            if diam > space:
-                space = diam
+        if 'fp_circle' in hole:
+            for circle in hole['fp_circle']:
+                if circle['layer'][0] != 'F.CrtYd':
+                    continue
+                diam = max(circle['end'][0], circle['end'][1]) * 2
+                if diam > space:
+                    space = diam
+        else:
+            space = drill_space
 
         result.pcb_mount.append((center, drill, space, hole.property['Reference']))
 
