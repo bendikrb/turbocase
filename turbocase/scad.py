@@ -72,7 +72,7 @@ def generate(case):
     result += f'    pcb_top = floor_height + standoff_height + pcb_thickness;\n'
     result += '\n'
     result += '    difference() {\n'
-    result += f'        box({case.wall_thickness}, {case.floor_thickness}, inner_height) ' + '{\n'
+    result += f'        box({case.wall_thickness}, floor_height, inner_height) ' + '{\n'
     result += '            ' + _make_scad_polygon(case.inner_path)
     result += '        }\n\n'
 
@@ -97,7 +97,7 @@ def generate(case):
     for part in case.parts:
         if part.substract is None:
             continue
-        z = case.floor_thickness
+        z = 'floor_height'
         if part.offset_pcb:
             z = 'pcb_top'
         result += f'    // {part.description}\n'
@@ -110,15 +110,15 @@ def generate(case):
 
     for mount in case.pcb_mount:
         result += f'    // {mount[3]}\n'
-        result += f'    translate([{mount[0][0]}, {mount[0][1]}, {case.floor_thickness}])\n'
+        result += f'    translate([{mount[0][0]}, {mount[0][1]}, floor_height])\n'
         # This currently creates correct holes for the M3 threaded metal inserts I have. Not generic
-        result += f'    mount({mount[1] + 0.2}, {mount[2]}, 5);\n\n'
+        result += f'    mount({mount[1] + 0.2}, {mount[2]}, standoff_height);\n\n'
 
     for part in case.parts:
         if part.add is None:
             continue
         result += f'    // {part.description}\n'
-        z = case.floor_thickness
+        z = 'floor_height'
         if part.offset_pcb:
             z = 'pcb_top'
         result += f'    translate([{part.position[0]}, {part.position[1]}, {z}])\n'
