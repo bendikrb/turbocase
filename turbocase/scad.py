@@ -1,6 +1,4 @@
 _template = """
-show_pcb = false;
-
 module wall (thickness, height) {
     linear_extrude(height) {
         difference() {
@@ -76,12 +74,12 @@ def _make_pcb_module(case):
     return result
 
 
-def generate(case):
+def generate(case, show_pcb=False):
     """
     :type case: Case
     """
-
-    result = _template + "\n"
+    result = 'show_pcb = ' + ('true' if show_pcb else 'false') + ';\n\n'
+    result += _template.lstrip() + "\n"
 
     for m in case.modules:
         result += m + "\n"
