@@ -53,9 +53,23 @@ def _make_scad_polygon(points):
 
 def _make_pcb_module(case):
     result = 'module pcb() {\n'
+    result += f'    thickness = {case.pcb_thickness};\n\n'
     result += '    color("#009900")\n'
-    result += f'    linear_extrude({case.pcb_thickness}) ' + '{\n'
-    result += '        ' + _make_scad_polygon(case.pcb_path)
+    result += '    difference() {\n'
+    result += f'        linear_extrude(thickness) ' + '{\n'
+    result += '            ' + _make_scad_polygon(case.pcb_path)
+    result += '        }\n'
+    for shape in case.pcb_holes:
+        if shape.is_circle:
+            result += f'    translate([{shape.point[0]}, {shape.point[1]}, -1])\n'
+            result += f'        cylinder(thickness+2, {shape.radius}, {shape.radius}, $fn=32);\n'
+        elif shape.is_rect:
+            result += f'    translate([{shape.point[0]}, {shape.point[1]}, 0])\n'
+            result += f'        cube([{shape.width}, {shape.height}, thickness + 2], center=true);\n'
+        else:
+            result += f'    translate([0, 0, -1])\n'
+            result += f'    linear_extrude(thickness+2) \n'
+            result += f'        {_make_scad_polygon(shape.path())}\n'
     result += '    }\n'
     result += '}\n\n'
     return result

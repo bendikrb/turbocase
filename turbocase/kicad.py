@@ -84,6 +84,17 @@ class Shape:
         res.append(graphic)
         return res
 
+    @classmethod
+    def make_circle(cls, center, radius, layer=None):
+        if layer is None:
+            layer = 'User.6'
+
+        return Shape.from_single(Sym([sexpdata.Symbol('gr_circle'),
+                                      [sexpdata.Symbol('center'), center[0], center[1]],
+                                      [sexpdata.Symbol('end'), center[0], center[1] + radius],
+                                      [sexpdata.Symbol('layer'), layer],
+                                      ]))
+
     def __init__(self):
         self.parts = []
         self.start = ()
@@ -366,6 +377,7 @@ def load_pcb(pcb_file, outline_layer=None):
             space = drill_space
 
         result.pcb_mount.append((center, drill, space, hole.property['Reference']))
+        result.pcb_holes.append(Shape.make_circle(center, drill / 2))
 
     max_height = 0
     for item in connectors:
