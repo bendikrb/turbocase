@@ -297,6 +297,7 @@ def load_pcb(pcb_file, outline_layer=None):
     result = Case()
 
     outline_shapes = []
+    edgecuts_shapes = []
     mountingholes = []
     connectors = []
     parts = []
@@ -316,6 +317,8 @@ def load_pcb(pcb_file, outline_layer=None):
                     if isinstance(sub, list):
                         if sub[0].value() == 'layer' and sub[1] == outline_layer:
                             outline_shapes.append(Sym(symbol))
+                        if sub[0].value() == 'layer' and sub[1] == 'Edge.Cuts':
+                            edgecuts_shapes.append(Sym(symbol))
 
             if name == 'footprint':
                 footprint = Sym(symbol)
@@ -330,8 +333,12 @@ def load_pcb(pcb_file, outline_layer=None):
                             connectors.append(footprint)
 
     outline = sort_outline(outline_shapes)
+    edge_cuts = sort_outline(edgecuts_shapes)
 
     path = outline[0].path()
+    result.pcb_path = edge_cuts[0].path()
+    if len(edge_cuts) > 1:
+        result.pcb_holes = edge_cuts[1:]
 
     result.inner_path = path
     if len(outline) > 1:

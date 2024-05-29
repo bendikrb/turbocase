@@ -51,6 +51,16 @@ def _make_scad_polygon(points):
     return result
 
 
+def _make_pcb_module(case):
+    result = 'module pcb() {\n'
+    result += '    color("#009900")\n'
+    result += f'    linear_extrude({case.pcb_thickness}) ' + '{\n'
+    result += '        ' + _make_scad_polygon(case.pcb_path)
+    result += '    }\n'
+    result += '}\n\n'
+    return result
+
+
 def generate(case):
     """
     :type case: Case
@@ -60,6 +70,8 @@ def generate(case):
 
     for m in case.modules:
         result += m + "\n"
+
+    result += _make_pcb_module(case)
 
     center = case.get_center()
     result += f'scale([1, -1, 1])\n'
@@ -91,7 +103,7 @@ def generate(case):
     for conn in sorted(case.connectors, key=lambda x: x.reference):
         result += f'    // {conn.reference} {conn.footprint} {conn.description}\n'
         result += f'    translate([{conn.position[0]}, {conn.position[1]}, pcb_top])\n' \
-                  f'    rotate([0, 0, {conn.position[2] + 180}])\n' \
+                  f'    rotate([0, 0, {-conn.position[2]}])\n' \
                   f'        #connector({conn.bounds[0]},{conn.bounds[1]},{conn.bounds[2]},{conn.bounds[3]},{conn.prop_height + 0.2});\n\n'
 
     for part in case.parts:
@@ -103,10 +115,13 @@ def generate(case):
         result += f'    // {part.description}\n'
         result += f'    translate([{part.position[0]}, {part.position[1]}, {z}])\n'
         if len(part.position) == 3:
-            result += f'    rotate([0, 0, {part.position[2] + 180}])\n'
+            result += f'    rotate([0, 0, {-part.position[2]}])\n'
         result += f'        {part.substract}\n'
 
     result += '    }\n\n'
+
+    result += '    translate([0, 0, floor_height + standoff_height])\n'
+    result += '        pcb();\n\n'
 
     for mount in case.pcb_mount:
         result += f'    // {mount[3]}\n'
@@ -123,7 +138,7 @@ def generate(case):
             z = 'pcb_top'
         result += f'    translate([{part.position[0]}, {part.position[1]}, {z}])\n'
         if len(part.position) == 3:
-            result += f'    rotate([0, 0, {part.position[2] + 180}])\n'
+            result += f'    rotate([0, 0, {-part.position[2]}])\n'
         result += f'        {part.add}\n'
 
     result += '}\n'
