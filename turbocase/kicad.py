@@ -386,6 +386,8 @@ def load_pcb(pcb_file, outline_layer=None):
         c.description = desc
         c.bounds = shape_bounds(shapes)
         c.position = item['at'][:]
+        if len(c.position) == 2:
+            c.position = c.position + [0]
         result.connectors.append(c)
     result.max_connector_height = max_height
 
