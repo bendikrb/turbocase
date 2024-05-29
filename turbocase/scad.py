@@ -1,4 +1,5 @@
 _template = """
+show_pcb = false;
 
 module wall (thickness, height) {
     linear_extrude(height) {
@@ -134,8 +135,10 @@ def generate(case):
 
     result += '    }\n\n'
 
+    result += '    if (show_pcb) {\n'
     result += '    translate([0, 0, floor_height + standoff_height])\n'
     result += '        pcb();\n\n'
+    result += '    }'
 
     for mount in case.pcb_mount:
         result += f'    // {mount[3]}\n'
