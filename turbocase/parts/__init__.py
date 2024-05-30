@@ -1,10 +1,11 @@
-__all__ = ["batteryholder", "screws", "keyhole", "cutout"]
+__all__ = ["batteryholder", "screws", "keyhole", "cutout", "case"]
 
 
 class BasePart:
     description = ""
     _substract = False
     _add = True
+    _constrain = False
     _hide = ''
 
     # If False the ground offset of the OpenSCAD part will be floor_thickness, if True it will

@@ -100,6 +100,13 @@ def _make_pcb_module(case):
     return result
 
 
+def _make_outline_module(case):
+    result = 'module case_outline() {\n'
+    result += '    ' + _make_scad_polygon(case.inner_path)
+    result += '}\n\n'
+    return result
+
+
 def generate(case, show_pcb=False):
     """
     :type case: Case
@@ -135,6 +142,7 @@ def generate(case, show_pcb=False):
         result += m + "\n"
 
     result += _make_pcb_module(case)
+    result += _make_outline_module(case)
 
     center = case.get_center()
     result += f'rotate([render == "lid" ? 180 : 0, 0, 0])\n'
@@ -145,7 +153,7 @@ def generate(case, show_pcb=False):
     result += '\n'
     result += '    difference() {\n'
     result += f'        box(wall_thickness, floor_height, inner_height) ' + '{\n'
-    result += '            ' + _make_scad_polygon(case.inner_path)
+    result += '            case_outline();\n'
     result += '        }\n\n'
 
     for shape in case.cutouts:
@@ -192,8 +200,41 @@ def generate(case, show_pcb=False):
         # This currently creates correct holes for the M3 threaded metal inserts I have. Not generic
         result += f'        mount({mount[1] + 0.2}, {mount[2]}, standoff_height);\n\n'
 
+    has_constrained = False
+    for part in case.parts:
+        if part.constrain:
+            has_constrained = True
+            break
+
+    if has_constrained:
+        result += '        intersection() {\n'
+        result += '            translate([0, 0, floor_height])\n'
+        result += '            linear_extrude(inner_height)\n'
+        result += '                case_outline();\n\n'
+        result += '            union() {\n\n'
+
+        for part in case.parts:
+            if not part.constrain:
+                continue
+            if part.add is None:
+                continue
+
+            z = 'floor_height'
+            if part.offset_pcb:
+                z = 'pcb_top'
+            result += f'            // {part.description}\n'
+            result += f'            translate([{part.position[0]}, {part.position[1]}, {z}])\n'
+            if len(part.position) == 3:
+                result += f'            rotate([0, 0, {-part.position[2]}])\n'
+            result += f'                {part.add}\n\n'
+
+        result += '            }\n'
+        result += '        }\n'
+
     for part in case.parts:
         if part.add is None:
+            continue
+        if part.constrain:
             continue
         result += f'        // {part.description}\n'
         z = 'floor_height'
@@ -202,7 +243,7 @@ def generate(case, show_pcb=False):
         result += f'        translate([{part.position[0]}, {part.position[1]}, {z}])\n'
         if len(part.position) == 3:
             result += f'        rotate([0, 0, {-part.position[2]}])\n'
-        result += f'            {part.add}\n'
+        result += f'            {part.add}\n\n'
 
     result += '    }\n'
     result += '}\n'

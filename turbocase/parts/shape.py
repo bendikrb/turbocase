@@ -27,10 +27,11 @@ class Line(Shape):
 
 
 class Circle(Shape):
-    def __init__(self, layer, center, end):
+    def __init__(self, layer, center, end, style=None):
         self.layer = layer
         self.center = center
         self.end = end
+        self.style = style or 'default'
 
     def graphic(self, uuid):
         return (
@@ -39,7 +40,7 @@ class Circle(Shape):
             (Symbol('end'), *self.end),
             (Symbol('stroke'),
              (Symbol('width'), 0.2),
-             (Symbol('type'), Symbol('default')),
+             (Symbol('type'), Symbol(self.style)),
              ),
             (Symbol('fill'), Symbol('none')),
             (Symbol('layer'), self.layer),

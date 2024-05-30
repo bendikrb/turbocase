@@ -3,7 +3,7 @@
   "Cutout_TypeC"
   (version 20240108)
   (generator turbocase)
-  (descr "")
+  (descr "Hole to fit the plug of a Type-C connector")
   (attr board_only exclude_from_pos_files exclude_from_bom allow_missing_courtyard)
   (zone_connect 0)
   (

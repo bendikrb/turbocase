@@ -1,0 +1,120 @@
+(footprint "CaseCorner_M3"
+	(version 20240108)
+	(generator "pcbnew")
+	(generator_version "8.0")
+	(layer "F.Cu")
+	(descr "Corner screw mount for a screw-mount lid")
+	(property "Reference" ""
+		(at 0 0 0)
+		(unlocked yes)
+		(layer "F.SilkS")
+		(uuid "b2ecdd37-97c2-4d19-89db-a0d65ce54982")
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+	)
+	(property "Value" ""
+		(at 0 0 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(uuid "cbeb824d-fe05-4a98-b7ab-e690087e62fb")
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+	)
+	(property "Footprint" "CaseCorner_M3"
+		(at 0 0 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "6228fec5-a019-4197-a54f-f4dc4b074cbc")
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+	)
+	(property "Datasheet" ""
+		(at 0 0 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "43bed931-18cd-45c2-a9cb-d8d2b30643bb")
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+	)
+	(property "Description" ""
+		(at 0 0 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "2cd658a1-3c6b-4452-93be-5cc29bd76633")
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+	)
+	(zone_connect 0)
+	(attr board_only exclude_from_pos_files exclude_from_bom allow_missing_courtyard)
+	(fp_line
+		(start -5.6 -2.8)
+		(end 0 -2.8)
+		(stroke
+			(width 0.2)
+			(type default)
+		)
+		(layer "User.6")
+		(uuid "230716fc-9111-471d-849a-699357567e93")
+	)
+	(fp_line
+		(start -5.6 2.8)
+		(end 0 2.8)
+		(stroke
+			(width 0.2)
+			(type default)
+		)
+		(layer "User.6")
+		(uuid "2e79fa5f-bdd9-46a9-a856-b47ee85b4414")
+	)
+	(fp_arc
+		(start 0 -2.8)
+		(mid 2.8 0)
+		(end 0 2.8)
+		(stroke
+			(width 0.2)
+			(type default)
+		)
+		(layer "User.6")
+		(uuid "b48ecd9e-e404-4a6c-95c9-9691bda0013a")
+	)
+	(fp_circle
+		(center 0 0)
+		(end 0 1.5)
+		(stroke
+			(width 0.2)
+			(type default)
+		)
+		(fill none)
+		(layer "User.6")
+		(uuid "83c82dc3-288f-423e-90a3-989c120412a2")
+	)
+	(fp_circle
+		(center 0 0)
+		(end 0 2.8)
+		(stroke
+			(width 0.2)
+			(type dot)
+		)
+		(fill none)
+		(layer "User.6")
+		(uuid "43b6d8fd-70d7-45aa-b7f7-a7be9793e853")
+	)
+)

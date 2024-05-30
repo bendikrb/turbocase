@@ -27,6 +27,7 @@ class Part:
 
         self.add = None
         self.substract = None
+        self.constrain = False
 
         self.offset_pcb = False
 
