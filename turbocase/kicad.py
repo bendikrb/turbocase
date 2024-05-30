@@ -298,9 +298,11 @@ def shape_bounds(primitives):
     return min_x, min_y, max_x, max_y
 
 
-def load_pcb(pcb_file, outline_layer=None):
+def load_pcb(pcb_file, outline_layer=None, lid_layer=None):
     if outline_layer is None:
         outline_layer = 'User.6'
+    if lid_layer is None:
+        lid_layer = 'User.7'
 
     with open(pcb_file) as handle:
         pcb = sexpdata.load(handle)
@@ -308,6 +310,7 @@ def load_pcb(pcb_file, outline_layer=None):
     result = Case()
 
     outline_shapes = []
+    lid_shapes = []
     edgecuts_shapes = []
     mountingholes = []
     connectors = []
@@ -328,6 +331,8 @@ def load_pcb(pcb_file, outline_layer=None):
                     if isinstance(sub, list):
                         if sub[0].value() == 'layer' and sub[1] == outline_layer:
                             outline_shapes.append(Sym(symbol))
+                        if sub[0].value() == 'layer' and sub[1] == lid_layer:
+                            lid_shapes.append(Sym(symbol))
                         if sub[0].value() == 'layer' and sub[1] == 'Edge.Cuts':
                             edgecuts_shapes.append(Sym(symbol))
 
@@ -345,6 +350,7 @@ def load_pcb(pcb_file, outline_layer=None):
 
     outline = sort_outline(outline_shapes)
     edge_cuts = sort_outline(edgecuts_shapes)
+    lid = sort_outline(lid_shapes)
 
     path = outline[0].path()
     result.pcb_path = edge_cuts[0].path()
@@ -354,6 +360,8 @@ def load_pcb(pcb_file, outline_layer=None):
     result.inner_path = path
     if len(outline) > 1:
         result.cutouts = outline[1:]
+
+    result.lid_holes = lid
 
     for hole in mountingholes:
         center = hole['at'][:]

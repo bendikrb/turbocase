@@ -41,6 +41,7 @@ class Case:
         self.pcb_thickness = 1.6
         self.pcb_path = []
         self.pcb_holes = []
+        self.lid_holes = []
         self.floor_thickness = 1.2
         self.wall_thickness = 1.2
         self.standoff_height = 5

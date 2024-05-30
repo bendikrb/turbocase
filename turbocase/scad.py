@@ -168,6 +168,20 @@ def generate(case, show_pcb=False):
             result += f'    #linear_extrude(floor_height+2) \n'
             result += f'        {_make_scad_polygon(shape.path())}\n'
 
+
+    for shape in case.lid_holes:
+        if shape.is_circle:
+            result += f'    translate([{shape.point[0]}, {shape.point[1]}, inner_height])\n'
+            result += f'        cylinder(floor_height+2, {shape.radius}, {shape.radius}, $fn=32);\n'
+        elif shape.is_rect:
+            result += f'    translate([{shape.point[0]}, {shape.point[1]}, inner_height+floor_height])\n'
+            result += f'        cube([{shape.width}, {shape.height}, floor_height + 2], center=true);\n'
+        else:
+            result += f'    translate([0, 0, inner_height])\n'
+            result += f'    linear_extrude(floor_height+2) \n'
+            result += f'        {_make_scad_polygon(shape.path())}\n'
+
+
     for conn in sorted(case.connectors, key=lambda x: x.reference):
         result += f'    // {conn.reference} {conn.footprint} {conn.description}\n'
         result += f'    translate([{conn.position[0]}, {conn.position[1]}, pcb_top])\n' \
