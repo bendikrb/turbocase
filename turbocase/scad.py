@@ -16,11 +16,37 @@ module bottom(thickness, height) {
     }
 }
 
+module lid(thickness, height) {
+    linear_extrude(height) {
+        offset(r=thickness)
+            children();
+    }
+    translate([0,0,-thickness])
+    difference() {
+        linear_extrude(height) {
+                offset(r=-0.2)
+                children();
+        }
+        translate([0,0, -0.5])
+         linear_extrude(height+1) {
+                offset(r=-1.2)
+                children();
+        }
+    }
+}
+
+
 module box(wall_thick, bottom_layers, height) {
+    if (render == "all" || render == "case") {
+        translate([0,0, bottom_layers])
+            wall(wall_thick, height) children();
+        bottom(wall_thick, bottom_layers) children();
+    }
     
-    translate([0,0, bottom_layers])
-        wall(wall_thick, height) children();
-    bottom(wall_thick, bottom_layers) children();
+    if (render == "all" || render == "lid") {
+        translate([0, 0, height+bottom_layers+0.1])
+        lid(wall_thick, bottom_layers) children();
+    }
 }
 
 module mount(drill, space, height) {
@@ -78,7 +104,31 @@ def generate(case, show_pcb=False):
     """
     :type case: Case
     """
-    result = 'show_pcb = ' + ('true' if show_pcb else 'false') + ';\n\n'
+    lid_model = 'cap'
+    result = '/* [Rendering options] */\n'
+    result += '// Show placeholder PCB in OpenSCAD preview\n'
+    result += 'show_pcb = ' + ('true' if show_pcb else 'false') + ';\n'
+    result += '// Lid mounting method\n'
+    result += f'lid_model = "{lid_model}"; // [cap]\n'
+    result += '// Conditional rendering\n'
+    result += f'render = "lid"; // [all, case, lid]\n'
+    result += '\n\n'
+
+    result += '/* [Dimensions] */\n'
+    result += '// Height of the PCB mounting stand-offs between the bottom of the case and the PCB\n'
+    result += f'standoff_height = {case.standoff_height};\n'
+    result += f'// PCB thickness\n'
+    result += f'pcb_thickness = {case.pcb_thickness};\n'
+    result += f'// Bottom layer thickness\n'
+    result += f'floor_height = {case.floor_thickness};\n'
+    result += f'// Case wall thickness\n'
+    result += f'wall_thickness = {case.wall_thickness};\n'
+    result += f'// Space between the top of the PCB and the top of the case\n'
+    result += f'headroom = {max(case.max_connector_height, case.max_part_height - case.standoff_height - case.pcb_thickness)};\n'
+
+    result += '/* [Hidden] */\n\n'
+    result += f'inner_height = floor_height + standoff_height + pcb_thickness + headroom;\n'
+
     result += _template.lstrip() + "\n"
 
     for m in case.modules:
@@ -87,17 +137,14 @@ def generate(case, show_pcb=False):
     result += _make_pcb_module(case)
 
     center = case.get_center()
+    result += f'rotate([render == "lid" ? 180 : 0, 0, 0])\n'
     result += f'scale([1, -1, 1])\n'
     result += f'translate([-{center[0]}, -{center[1]}, 0]) ' + '{\n'
 
-    result += f'    standoff_height = {case.standoff_height};\n'
-    result += f'    floor_height = {case.floor_thickness};\n'
-    result += f'    pcb_thickness = {case.pcb_thickness};\n'
-    result += f'    inner_height = standoff_height + pcb_thickness + {max(case.max_connector_height, case.max_part_height - case.standoff_height - case.pcb_thickness)};\n'
     result += f'    pcb_top = floor_height + standoff_height + pcb_thickness;\n'
     result += '\n'
     result += '    difference() {\n'
-    result += f'        box({case.wall_thickness}, floor_height, inner_height) ' + '{\n'
+    result += f'        box(wall_thickness, floor_height, inner_height) ' + '{\n'
     result += '            ' + _make_scad_polygon(case.inner_path)
     result += '        }\n\n'
 
@@ -133,28 +180,30 @@ def generate(case, show_pcb=False):
 
     result += '    }\n\n'
 
-    result += '    if (show_pcb) {\n'
-    result += '    translate([0, 0, floor_height + standoff_height])\n'
-    result += '        pcb();\n\n'
-    result += '    }'
+    result += '    if (show_pcb && $preview) {\n'
+    result += '        translate([0, 0, floor_height + standoff_height])\n'
+    result += '            pcb();\n'
+    result += '    }\n\n'
 
+    result += '    if (render == "all" || render == "case") {\n'
     for mount in case.pcb_mount:
-        result += f'    // {mount[3]}\n'
-        result += f'    translate([{mount[0][0]}, {mount[0][1]}, floor_height])\n'
+        result += f'        // {mount[3]}\n'
+        result += f'        translate([{mount[0][0]}, {mount[0][1]}, floor_height])\n'
         # This currently creates correct holes for the M3 threaded metal inserts I have. Not generic
-        result += f'    mount({mount[1] + 0.2}, {mount[2]}, standoff_height);\n\n'
+        result += f'        mount({mount[1] + 0.2}, {mount[2]}, standoff_height);\n\n'
 
     for part in case.parts:
         if part.add is None:
             continue
-        result += f'    // {part.description}\n'
+        result += f'        // {part.description}\n'
         z = 'floor_height'
         if part.offset_pcb:
             z = 'pcb_top'
-        result += f'    translate([{part.position[0]}, {part.position[1]}, {z}])\n'
+        result += f'        translate([{part.position[0]}, {part.position[1]}, {z}])\n'
         if len(part.position) == 3:
-            result += f'    rotate([0, 0, {-part.position[2]}])\n'
-        result += f'        {part.add}\n'
+            result += f'        rotate([0, 0, {-part.position[2]}])\n'
+        result += f'            {part.add}\n'
 
+    result += '    }\n'
     result += '}\n'
     return result
