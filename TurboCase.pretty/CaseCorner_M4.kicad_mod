@@ -1,15 +1,15 @@
 (
   footprint
-  "CaseCorner_M3"
+  "CaseCorner_M4"
   (version 20240108)
   (generator turbocase)
-  (descr "Corner screw mount for a screw-mount lid with an M3 sized screw")
+  (descr "Corner screw mount for a screw-mount lid with an M4 sized screw")
   (attr board_only exclude_from_pos_files exclude_from_bom allow_missing_courtyard)
   (zone_connect 0)
   (
     fp_circle
     (center 0 0)
-    (end 0 1.5)
+    (end 0 2.0)
     (
       stroke
       (width 0.2)
@@ -17,12 +17,12 @@
     )
     (fill none)
     (layer "User.6")
-    (uuid "83c82dc3-288f-423e-90a3-989c120412a2")
+    (uuid "566a3e03-9c79-4113-8c98-5a1805fff321")
   )
   (
     fp_circle
     (center 0 0)
-    (end 0 2.8)
+    (end 0 3.75)
     (
       stroke
       (width 0.2)
@@ -30,43 +30,43 @@
     )
     (fill none)
     (layer "User.6")
-    (uuid "43b6d8fd-70d7-45aa-b7f7-a7be9793e853")
+    (uuid "5d8d88a4-cd89-44d0-bff1-3815805e26cc")
   )
   (
     fp_arc
-    (start 0 2.8)
-    (mid 0 2.8)
-    (end 0 -2.8)
+    (start 0 3.75)
+    (mid 0 3.75)
+    (end 0 -3.75)
     (
       stroke
       (width 0.2)
       (type default)
     )
     (layer "User.6")
-    (uuid "b48ecd9e-e404-4a6c-95c9-9691bda0013a")
+    (uuid "86498114-56a5-45c4-ac3d-71dc5c8973fa")
   )
   (
     fp_line
-    (start -5.6 2.8)
-    (end 0 2.8)
+    (start -7.5 3.75)
+    (end 0 3.75)
     (
       stroke
       (width 0.2)
       (type default)
     )
     (layer "User.6")
-    (uuid "2e79fa5f-bdd9-46a9-a856-b47ee85b4414")
+    (uuid "dbd68ceb-4e07-4451-aa5e-fc04ea43bb47")
   )
   (
     fp_line
-    (start -5.6 -2.8)
-    (end 0 -2.8)
+    (start -7.5 -3.75)
+    (end 0 -3.75)
     (
       stroke
       (width 0.2)
       (type default)
     )
     (layer "User.6")
-    (uuid "230716fc-9111-471d-849a-699357567e93")
+    (uuid "924b1ba5-a3a8-456b-b2ea-f588a057a807")
   )
 )

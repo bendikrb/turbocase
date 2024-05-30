@@ -1,0 +1,48 @@
+(
+  footprint
+  "CasePost_M4"
+  (version 20240108)
+  (generator turbocase)
+  (descr "Screw mount post for a screw-mount lid with an M4 sized screw")
+  (attr board_only exclude_from_pos_files exclude_from_bom allow_missing_courtyard)
+  (zone_connect 0)
+  (
+    fp_circle
+    (center 0 0)
+    (end 0 2.0)
+    (
+      stroke
+      (width 0.2)
+      (type default)
+    )
+    (fill none)
+    (layer "User.6")
+    (uuid "47b9ce5d-233e-492c-80c6-21956a82795d")
+  )
+  (
+    fp_circle
+    (center 0 0)
+    (end 0 3.75)
+    (
+      stroke
+      (width 0.2)
+      (type dot)
+    )
+    (fill none)
+    (layer "User.6")
+    (uuid "663dde2e-6366-48c9-a7e4-9d480ee46848")
+  )
+  (
+    fp_circle
+    (center 0 0)
+    (end 0 3.75)
+    (
+      stroke
+      (width 0.2)
+      (type default)
+    )
+    (fill none)
+    (layer "User.6")
+    (uuid "ab9c89d8-d42d-4384-9238-cbcc963b4fe8")
+  )
+)
