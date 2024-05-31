@@ -8,13 +8,13 @@ class KeyHole(BasePart):
         margin = 0.2;
         translate([0,0,-10])
             union() {
-                cylinder(15, (hole_diameter/2)+margin, (hole_diameter/2)+margin, $fn=32);
+                cylinder(15, (hole_diameter/2)+margin, (hole_diameter/2)+margin);
 
                 translate([0, head_diameter/2, 7.5])
                     cube([hole_diameter+(2*margin), head_diameter, 15], center=true);
 
                 translate([0, head_diameter, 0])
-                    cylinder(15, (head_diameter/2)+margin, (head_diameter/2)+margin, $fn=32);
+                    cylinder(15, (head_diameter/2)+margin, (head_diameter/2)+margin);
             }
     }
     module KeyHole(hole_diameter, head_diameter, head_height) {
@@ -23,20 +23,20 @@ class KeyHole(BasePart):
 
         difference() {
             union() {
-                cylinder(1, (head_diameter/2)+margin+wall, (head_diameter/2)+margin+wall, $fn=32);
+                cylinder(1, (head_diameter/2)+margin+wall, (head_diameter/2)+margin+wall);
 
                 translate([0, head_diameter, 0])
-                cylinder(1, (head_diameter/2)+margin+wall, (head_diameter/2)+margin+wall, $fn=32);
+                cylinder(1, (head_diameter/2)+margin+wall, (head_diameter/2)+margin+wall);
 
                 translate([0, head_diameter/2, 0.5])
                     cube([(head_diameter)+(2*margin)+(2*wall), head_diameter, 1], center=true);
             }
             union() {
                 translate([0, 0, -0.05])
-                cylinder(1.1, (head_diameter/2)+margin, (head_diameter/2)+margin, $fn=32);
+                cylinder(1.1, (head_diameter/2)+margin, (head_diameter/2)+margin);
 
                 translate([0, head_diameter, -0.05])
-                cylinder(1.1, (head_diameter/2)+margin, (head_diameter/2)+margin, $fn=32);
+                cylinder(1.1, (head_diameter/2)+margin, (head_diameter/2)+margin);
 
                 translate([0, head_diameter/2, 0.5])
                     cube([(head_diameter)+(2*margin), head_diameter, 1.1], center=true);

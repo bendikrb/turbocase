@@ -6,11 +6,11 @@ class ScrewHole(BasePart):
     """
     module ScrewHole_substract(hole_diameter, head_diameter) {
         translate([0,0,-10])
-            cylinder(15, (hole_diameter/2)+0.2, (hole_diameter/2)+0.2, $fn=32);
+            cylinder(15, (hole_diameter/2)+0.2, (hole_diameter/2)+0.2);
     }
     module ScrewHole(hole_diameter, head_diameter) {
         difference() {
-            cylinder(1, (head_diameter/2)+0.2, (head_diameter/2)+0.2, $fn=32);
+            cylinder(1, (head_diameter/2)+0.2, (head_diameter/2)+0.2);
 
             ScrewHole_substract(hole_diameter, head_diameter);
         }
@@ -34,15 +34,15 @@ class ScrewHoleCountersunk(ScrewHole):
     """
     module ScrewHoleCountersunk_substract(hole_diameter, head_diameter, head_height) {
         translate([0,0,-head_height+1.2])
-            cylinder(head_height, (hole_diameter/2)+0.2, (head_diameter/2)+0.2, $fn=32);
+            cylinder(head_height, (hole_diameter/2)+0.2, (head_diameter/2)+0.2);
 
         translate([0,0, -10])
-            cylinder(12, (hole_diameter/2)+0.2, (hole_diameter/2)+0.2, $fn=32);
+            cylinder(12, (hole_diameter/2)+0.2, (hole_diameter/2)+0.2);
 
     }
     module ScrewHoleCountersunk(hole_diameter, head_diameter, head_height) {
         difference() {
-            cylinder(1, (head_diameter/2)+1.2, (head_diameter/2)+1.2, $fn=32);
+            cylinder(1, (head_diameter/2)+1.2, (head_diameter/2)+1.2);
 
             ScrewHoleCountersunk_substract(hole_diameter, head_diameter, head_height);
         }

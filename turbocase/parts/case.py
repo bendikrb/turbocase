@@ -8,12 +8,12 @@ class CaseCorner(BasePart):
         translate([0, 0, -floor_height])
         difference() {
             union() {
-                cylinder(inner_height, size/2, size/2, $fn=32);
+                cylinder(inner_height, size/2, size/2);
                 translate([-size, 0, inner_height/2])
                     cube([size*2, size, inner_height], center=true);
             }
 
-            cylinder(inner_height+1, hole_diameter/2, hole_diameter/2, $fn=32);
+            cylinder(inner_height+1, hole_diameter/2, hole_diameter/2);
 
             translate([0, 0, floor_height])
                 CaseCorner_substract(size, hole_diameter, head_diameter, head_height);
@@ -22,9 +22,9 @@ class CaseCorner(BasePart):
 
     module CaseCorner_substract(size, hole_diameter, head_diameter, head_height) {
         translate([0, 0, 0.11]) {
-            cylinder(inner_height+floor_height, hole_diameter/2, hole_diameter/2, $fn=32);
+            cylinder(inner_height+floor_height, hole_diameter/2, hole_diameter/2);
             translate([0, 0, inner_height+floor_height-head_height])
-                cylinder(head_height, hole_diameter/2, head_diameter/2, $fn=32);
+                cylinder(head_height, hole_diameter/2, head_diameter/2);
         }
     }
     """
@@ -72,17 +72,17 @@ class CasePost(BasePart):
     """
     module CasePost(size, hole_diameter, head_diameter, head_height) {
         difference() {
-            cylinder(inner_height, size/2, size/2, $fn=32);
-            cylinder(inner_height+1, hole_diameter/2, hole_diameter/2, $fn=32);
+            cylinder(inner_height, size/2, size/2);
+            cylinder(inner_height+1, hole_diameter/2, hole_diameter/2);
             CasePost_substract(size, hole_diameter, head_diameter, head_height);
         }
     }
 
     module CasePost_substract(size, hole_diameter, head_diameter, head_height) {
         translate([0, 0, 0.11]) {
-            cylinder(inner_height+floor_height, hole_diameter/2, hole_diameter/2, $fn=32);
+            cylinder(inner_height+floor_height, hole_diameter/2, hole_diameter/2);
             translate([0, 0, inner_height+floor_height-head_height])
-                cylinder(head_height, hole_diameter/2, head_diameter/2, $fn=32);
+                cylinder(head_height, hole_diameter/2, head_diameter/2);
         }
     }
     """

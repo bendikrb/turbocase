@@ -52,8 +52,8 @@ module box(wall_thick, bottom_layers, height) {
 module mount(drill, space, height) {
     translate([0,0,height/2])
         difference() {
-            cylinder(h=height, r=(space/2), center=true, $fn=32);
-            cylinder(h=(height*2), r=(drill/2), center=true, $fn=32);
+            cylinder(h=height, r=(space/2), center=true);
+            cylinder(h=(height*2), r=(drill/2), center=true);
         }
 }
 
@@ -87,7 +87,7 @@ def _make_pcb_module(case):
     for shape in case.pcb_holes:
         if shape.is_circle:
             result += f'    translate([{shape.point[0]}, {shape.point[1]}, -1])\n'
-            result += f'        cylinder(thickness+2, {shape.radius}, {shape.radius}, $fn=32);\n'
+            result += f'        cylinder(thickness+2, {shape.radius}, {shape.radius});\n'
         elif shape.is_rect:
             result += f'    translate([{shape.point[0]}, {shape.point[1]}, 0])\n'
             result += f'        cube([{shape.width}, {shape.height}, thickness + 2], center=true);\n'
@@ -133,8 +133,12 @@ def generate(case, show_pcb=False):
     result += f'// Space between the top of the PCB and the top of the case\n'
     result += f'headroom = {max(case.max_connector_height, case.max_part_height - case.standoff_height - case.pcb_thickness)};\n'
 
-    result += '/* [Hidden] */\n\n'
+    result += '\n'
+    result += '/* [Hidden] */\n'
+    result += '$fa=$preview ? 10 : 4;\n'
+    result += '$fs=0.2;\n'
     result += f'inner_height = floor_height + standoff_height + pcb_thickness + headroom;\n'
+    result += '\n'
 
     result += _template.lstrip() + "\n"
 
@@ -172,7 +176,7 @@ def generate(case, show_pcb=False):
     for shape in case.lid_holes:
         if shape.is_circle:
             result += f'    translate([{shape.point[0]}, {shape.point[1]}, inner_height])\n'
-            result += f'        cylinder(floor_height+2, {shape.radius}, {shape.radius}, $fn=32);\n'
+            result += f'        cylinder(floor_height+2, {shape.radius}, {shape.radius});\n'
         elif shape.is_rect:
             result += f'    translate([{shape.point[0]}, {shape.point[1]}, inner_height+floor_height])\n'
             result += f'        cube([{shape.width}, {shape.height}, floor_height + 2], center=true);\n'

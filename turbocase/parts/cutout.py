@@ -12,9 +12,9 @@ class Cutout_TypeC(BasePart):
         rotate([0,90,0])
             union() {
                 translate([0, -(width/2 - height/2), 0])
-                    cylinder(length, height/2, height/2, $fn=32);
+                    cylinder(length, height/2, height/2);
                 translate([0, (width/2 - height/2), 0])
-                    cylinder(length, height/2, height/2, $fn=32);
+                    cylinder(length, height/2, height/2);
                 translate([0, 0, length/2])
                     cube([height, width-height, length], center=true);
             }

@@ -14,16 +14,16 @@ class BatteryHolder_Cylindrical(BasePart):
 
                 rotate([-90, 0, 0])
                 translate([diameter/2+bs, -(diameter/2), border])
-                cylinder(length, diameter/2, diameter/2, $fn=48);
+                cylinder(length, diameter/2, diameter/2);
             }
 
             translate([diameter/2+bs, 0, diameter/2])
             rotate([-90, 0, 0])
-            cylinder(border, diameter/2, diameter/2, $fn=48);
+            cylinder(border, diameter/2, diameter/2);
 
             translate([diameter/2+bs, length+border, diameter/2])
             rotate([-90, 0, 0])
-            cylinder(border, diameter/2, diameter/2, $fn=48);
+            cylinder(border, diameter/2, diameter/2);
         }
     }
     """
