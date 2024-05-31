@@ -1,6 +1,6 @@
 _template = """
 module wall (thickness, height) {
-    linear_extrude(height) {
+    linear_extrude(height, convexity=10) {
         difference() {
             offset(r=thickness)
                 children();
@@ -10,25 +10,25 @@ module wall (thickness, height) {
 }
 
 module bottom(thickness, height) {
-    linear_extrude(height) {
+    linear_extrude(height, convexity=3) {
         offset(r=thickness)
             children();
     }
 }
 
 module lid(thickness, height) {
-    linear_extrude(height) {
+    linear_extrude(height, convexity=10) {
         offset(r=thickness)
             children();
     }
     translate([0,0,-thickness])
     difference() {
-        linear_extrude(height) {
+        linear_extrude(height, convexity=10) {
                 offset(r=-0.2)
                 children();
         }
         translate([0,0, -0.5])
-         linear_extrude(height+1) {
+         linear_extrude(height+1, convexity=10) {
                 offset(r=-1.2)
                 children();
         }
@@ -165,7 +165,7 @@ def generate(case, show_pcb=False):
             result += f'        #cube([{shape.width}, {shape.height}, floor_height + 2], center=true);\n'
         else:
             result += f'    translate([0, 0, -1])\n'
-            result += f'    #linear_extrude(floor_height+2) \n'
+            result += f'    #linear_extrude(floor_height+2, convexity=10) \n'
             result += f'        {_make_scad_polygon(shape.path())}\n'
 
 

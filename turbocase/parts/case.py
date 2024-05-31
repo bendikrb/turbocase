@@ -121,3 +121,39 @@ class CasePost_M4(CasePost):
     head_diameter = 7.5
     head_height = 2.2
     size = head_diameter
+
+
+class SnapMount(BasePart):
+    """
+    module SnapMount() {
+        size = 3;
+        snap_size = 3;
+        hang = 0.4;
+
+        st = standoff_height+pcb_thickness+1;
+        sh = standoff_height+pcb_thickness;
+        sw = 1;
+        snapper = [[0,0], [0, st], [sw, st], [sw+hang, sh], [sw, sh], [sw, 0]];
+        rotate([0, 0, 180])
+        translate([0, size-sw, 0]) {
+            translate([-snap_size/2, -size, 0])
+            rotate([90, 0, 90])
+            linear_extrude(snap_size)
+                polygon(snapper);
+
+            translate([0, 0, standoff_height/2])
+                cube([size, size, standoff_height], center=true);
+        }
+    }
+    """
+    description = "Snap-in mount for a PCB edge"
+
+    @classmethod
+    def make_footprint(cls):
+        size = 3
+        thick = 1
+        return [
+            # Outline
+            Line('User.6', [-size, 0], [size, 0]),
+            Rect('User.6', [-thick/2, 0], [thick/2, thick]),
+        ]

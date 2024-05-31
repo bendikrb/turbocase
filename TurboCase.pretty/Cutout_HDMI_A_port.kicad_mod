@@ -1,0 +1,34 @@
+(
+  footprint
+  "Cutout_HDMI_A_port"
+  (version 20240108)
+  (generator turbocase)
+  (descr "Hole to fit the port of a HDMI-A connector")
+  (attr board_only exclude_from_pos_files exclude_from_bom allow_missing_courtyard)
+  (zone_connect 0)
+  (
+    fp_rect
+    (start -5.0 -8.0)
+    (end 5.0 8.0)
+    (
+      stroke
+      (width 0.2)
+      (type default)
+    )
+    (fill none)
+    (layer "User.6")
+    (uuid "dc2f1141-6fa6-4823-afb6-4bf51b202f84")
+  )
+  (
+    fp_line
+    (start -10 0)
+    (end 10 0)
+    (
+      stroke
+      (width 0.2)
+      (type default)
+    )
+    (layer "User.6")
+    (uuid "e52455ad-889f-444c-bc85-1f006a3340c7")
+  )
+)
