@@ -35,6 +35,9 @@ class Cutout_TypeC(BasePart):
             Line('User.6', [-length, 0], [length, 0]),
         ]
 
+    def get_part_height(self):
+        return 3.5
+
 
 class Cutout_HDMI_A(BasePart):
     """
@@ -69,6 +72,9 @@ class Cutout_HDMI_A(BasePart):
             Rect('User.6', [-length / 2, -(width / 2)], [length / 2, width / 2]),
             Line('User.6', [-length, 0], [length, 0]),
         ]
+
+    def get_part_height(self):
+        return self.height
 
 
 class Cutout_HDMI_A_port(Cutout_HDMI_A):

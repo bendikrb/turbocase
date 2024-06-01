@@ -57,6 +57,9 @@ class BasePart:
     def get_screw_diameter(self):
         return None
 
+    def get_part_height(self):
+        return None
+
     @classmethod
     def make_footprint(cls):
         return []

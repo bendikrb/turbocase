@@ -235,7 +235,7 @@ class Shape:
 def sort_outline(shapes):
     if len(shapes) == 0:
         return []
-    
+
     # No sorting needed since you can only have one poly as outline
     if shapes[0].name == 'gr_poly':
         return shapes
@@ -443,12 +443,18 @@ def load_pcb(pcb_file, outline_layer=None, lid_layer=None):
         p.position = part.attr['at'][:]
         p.offset_pcb = inst._pcb_height
         p.screw_size = inst.get_screw_diameter()
+        ph = inst.get_part_height()
+        if ph is not None:
+            if p.offset_pcb:
+                ph += result.pcb_thickness + result.standoff_height
+        else:
+            ph = 0.0
 
         result.parts.append(p)
 
         if 'Height' in part.property:
             ph = float(part.property['Height'])
-            result.max_part_height = max(result.max_part_height, ph)
+        result.max_part_height = max(result.max_part_height, ph)
     result.modules = list(modules)
 
     return result
