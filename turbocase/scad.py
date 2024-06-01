@@ -127,6 +127,10 @@ def _make_insert_module(insert):
     result = f'module Insert_{insert}() ' + '{\n'
     result += f'    translate([0, 0, -insert_{insert}_depth])\n'
     result += f'        cylinder(insert_{insert}_depth, insert_{insert}_diameter/2, insert_{insert}_diameter/2);\n'
+
+    result += f'    translate([0, 0, -0.3])\n'
+    result += f'        cylinder(0.3, insert_{insert}_diameter/2, insert_{insert}_diameter/2+0.3);\n'
+
     result += '}\n\n'
     return result
 

@@ -233,6 +233,9 @@ class Shape:
 
 
 def sort_outline(shapes):
+    if len(shapes) == 0:
+        return []
+    
     # No sorting needed since you can only have one poly as outline
     if shapes[0].name == 'gr_poly':
         return shapes
