@@ -16,19 +16,19 @@ module bottom(thickness, height) {
     }
 }
 
-module lid(thickness, height) {
+module lid(thickness, height, edge) {
     linear_extrude(height, convexity=10) {
         offset(r=thickness)
             children();
     }
-    translate([0,0,-thickness])
+    translate([0,0,-edge])
     difference() {
-        linear_extrude(height, convexity=10) {
+        linear_extrude(edge, convexity=10) {
                 offset(r=-0.2)
                 children();
         }
         translate([0,0, -0.5])
-         linear_extrude(height+1, convexity=10) {
+         linear_extrude(edge+1, convexity=10) {
                 offset(r=-1.2)
                 children();
         }
@@ -45,7 +45,8 @@ module box(wall_thick, bottom_layers, height) {
     
     if (render == "all" || render == "lid") {
         translate([0, 0, height+bottom_layers+0.1])
-        lid(wall_thick, bottom_layers) children();
+        lid(wall_thick, bottom_layers, lid_model == "inner-fit" ? headroom-2.5: bottom_layers) 
+            children();
     }
 }
 
@@ -135,7 +136,7 @@ def _make_insert_module(insert):
     return result
 
 
-def _make_part(part, indent, substract=False):
+def _make_part(part, indent, substract=False, lid=False):
     s = 'Substract: ' if substract else ''
     result = f'{indent}// {s}{part.description}\n'
     z = 'floor_height'
@@ -146,6 +147,8 @@ def _make_part(part, indent, substract=False):
         result += f'{indent}rotate([0, 0, {-part.position[2]}])\n'
     if substract:
         result += f'{indent}    {part.substract};\n\n'
+    elif lid:
+        result += f'{indent}    {part.lid};\n\n'
     else:
         if part.insert_module:
             result += f'{indent}    {part.add}\n'
@@ -160,12 +163,11 @@ def generate(case, show_pcb=False):
     """
     :type case: Case
     """
-    lid_model = 'cap'
     result = '/* [Rendering options] */\n'
     result += '// Show placeholder PCB in OpenSCAD preview\n'
     result += 'show_pcb = ' + ('true' if show_pcb else 'false') + ';\n'
     result += '// Lid mounting method\n'
-    result += f'lid_model = "{lid_model}"; // [cap]\n'
+    result += f'lid_model = "{case.lid_model}"; // [cap, inner-fit]\n'
     result += '// Conditional rendering\n'
     result += f'render = "lid"; // [all, case, lid]\n'
     result += '\n\n'
@@ -296,5 +298,11 @@ def generate(case, show_pcb=False):
         result += _make_part(part, '        ')
 
     result += '    }\n'
+
+    for part in case.parts:
+        if part.lid is None:
+            continue
+        result += _make_part(part, '        ', lid=True)
+
     result += '}\n'
     return result

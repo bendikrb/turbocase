@@ -14,6 +14,7 @@ def main():
     parser.add_argument('--wall', help='Wall thickness in mm [default 1.2]', default=1.2, type=float)
     parser.add_argument('--standoff', help='Height generated for the PCB mounts in mm[default 5]', default=5, type=float)
     parser.add_argument('--show-pcb', help='Show the PCB placeholder by default [default false]', default=False, type=bool)
+    parser.add_argument('--lid', help='Lid construction model', choices=['cap', 'inner-fit'], default='cap')
     args = parser.parse_args()
 
     case = load_pcb(args.pcb, args.layer, args.lid_layer)
@@ -21,6 +22,7 @@ def main():
     case.floor_thickness = args.bottom
     case.wall_thickness = args.wall
     case.standoff_height = args.standoff
+    case.lid_model = args.lid
 
     code = scad.generate(case, show_pcb=args.show_pcb)
     with open(args.output, 'w') as handle:

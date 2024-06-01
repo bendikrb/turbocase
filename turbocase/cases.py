@@ -36,6 +36,7 @@ class Part:
 
         self.add = None
         self.substract = None
+        self.lid = None
         self.constrain = False
 
         self.offset_pcb = False
@@ -54,6 +55,7 @@ class Case:
         self.pcb_path = []
         self.pcb_holes = []
         self.lid_holes = []
+        self.lid_model = "cap"
         self.floor_thickness = 1.2
         self.wall_thickness = 1.2
         self.standoff_height = 5

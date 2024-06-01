@@ -1,0 +1,57 @@
+(
+  footprint
+  "LidClip"
+  (version 20240108)
+  (generator turbocase)
+  (descr "Snap-in mount for a PCB edge")
+  (attr board_only exclude_from_pos_files exclude_from_bom allow_missing_courtyard)
+  (zone_connect 0)
+  (
+    fp_line
+    (start -1 -4.0)
+    (end -1 4.0)
+    (
+      stroke
+      (width 0.2)
+      (type default)
+    )
+    (layer "User.6")
+    (uuid "225a8984-d494-4cf9-9641-e9ac0e47ad59")
+  )
+  (
+    fp_line
+    (start 0 -5.0)
+    (end 0 5.0)
+    (
+      stroke
+      (width 0.2)
+      (type default)
+    )
+    (layer "User.6")
+    (uuid "5a050ba1-1cd8-4223-8523-f2b85c09b66f")
+  )
+  (
+    fp_line
+    (start -1 -4.0)
+    (end 0 -5.0)
+    (
+      stroke
+      (width 0.2)
+      (type default)
+    )
+    (layer "User.6")
+    (uuid "f3390383-2435-446a-b80e-172117b57b05")
+  )
+  (
+    fp_line
+    (start -1 4.0)
+    (end 0 5.0)
+    (
+      stroke
+      (width 0.2)
+      (type default)
+    )
+    (layer "User.6")
+    (uuid "94d545fd-5866-4b9c-a7ad-d562e185fbdc")
+  )
+)

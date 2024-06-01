@@ -6,6 +6,7 @@ class BasePart:
     _substract = False
     _add = True
     _constrain = False
+    _lid = False
     _hide = ''
 
     # If False the ground offset of the OpenSCAD part will be floor_thickness, if True it will
@@ -53,6 +54,9 @@ class BasePart:
 
     def substract(self, footprint):
         return self.insert(footprint, suffix='_substract')
+
+    def lid(self, footprint):
+        return self.insert(footprint, suffix='_lid')
 
     def get_screw_diameter(self):
         return None

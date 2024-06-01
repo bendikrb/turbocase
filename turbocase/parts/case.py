@@ -164,3 +164,51 @@ class SnapMount(BasePart):
             Line('User.6', [-size, 0], [size, 0]),
             Rect('User.6', [-thick / 2, 0], [thick / 2, thick]),
         ]
+
+
+class LidClip(BasePart):
+    """
+    module LidClip_substract() {
+        size = 11;
+        hang = 0.6;
+
+        if(render == "case") {
+            translate([0, 0, lid_model == "inner-fit" ? -headroom+4.5 : 0])
+            translate([0, size/2, inner_height-1])
+            rotate([90, 0, 0])
+                cylinder(size, hang, hang);
+        }
+    }
+
+    module LidClip_lid() {
+        size = 10;
+        hang = 0.6;
+
+        if(render == "lid") {
+            translate([0, 0, lid_model == "inner-fit" ? -headroom+4.5 : 0])
+            translate([0, size/2, inner_height-1]) {
+                translate([-hang+0.05,-size/2, -hang/2])
+                    cube([1+hang/2, size, hang], center=true);
+
+                rotate([90, 0, 0])
+                    cylinder(size, hang, hang);
+            }
+        }
+    }
+    """
+    description = "Clip to snap the lid to the case, put this against the inside edge"
+    _substract = True
+    _lid = True
+    _add = False
+
+    @classmethod
+    def make_footprint(cls):
+        size = 10
+        thick = 1
+        return [
+            # Outline
+            Line('User.6', [-thick, -size / 2 + 1], [-thick, size / 2 - 1]),
+            Line('User.6', [0, -size / 2], [0, size / 2]),
+            Line('User.6', [-thick, -size / 2 + 1], [0, -size / 2]),
+            Line('User.6', [-thick, size / 2 - 1], [0, size / 2]),
+        ]
