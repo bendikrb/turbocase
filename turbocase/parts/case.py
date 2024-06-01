@@ -17,6 +17,10 @@ class CaseCorner(BasePart):
 
             translate([0, 0, floor_height])
                 CaseCorner_substract(size, hole_diameter, head_diameter, head_height);
+
+            translate([0, 0, inner_height+0.01])
+                children();
+
         }
     }
 
@@ -50,6 +54,9 @@ class CaseCorner(BasePart):
             Line('User.6', [-cls.size, cls.size / 2], [0, cls.size / 2]),
             Line('User.6', [-cls.size, -cls.size / 2], [0, -cls.size / 2]),
         ]
+
+    def get_screw_diameter(self):
+        return self.hole_diameter
 
 
 class CaseCorner_M3(CaseCorner):
@@ -155,5 +162,5 @@ class SnapMount(BasePart):
         return [
             # Outline
             Line('User.6', [-size, 0], [size, 0]),
-            Rect('User.6', [-thick/2, 0], [thick/2, thick]),
+            Rect('User.6', [-thick / 2, 0], [thick / 2, thick]),
         ]

@@ -5,7 +5,7 @@ from functools import total_ordering
 
 import sexpdata
 
-from turbocase.cases import Case, Connector, Part
+from turbocase.cases import Case, Connector, Part, Mount
 from turbocase.vector import Vector
 import turbocase.parts
 from turbocase.parts import *
@@ -383,8 +383,7 @@ def load_pcb(pcb_file, outline_layer=None, lid_layer=None):
                     space = diam
         else:
             space = drill_space
-
-        result.pcb_mount.append((center, drill, space, hole.property['Reference']))
+        result.pcb_mount.append(Mount(hole.property['Reference'], center, drill, space))
         result.pcb_holes.append(Shape.make_circle(center, drill / 2))
 
     max_height = 0
@@ -440,6 +439,7 @@ def load_pcb(pcb_file, outline_layer=None, lid_layer=None):
         p.constrain = inst._constrain
         p.position = part.attr['at'][:]
         p.offset_pcb = inst._pcb_height
+        p.screw_size = inst.get_screw_diameter()
 
         result.parts.append(p)
 

@@ -20,6 +20,15 @@ class Connector:
         return self.prop_height
 
 
+class Mount:
+    def __init__(self, ref, position, drill, size):
+        self.position = position
+        self.drill = drill
+        self.size = size
+        self.ref = ref
+        self.insert = None
+
+
 class Part:
     def __init__(self):
         self.position = None
@@ -30,6 +39,9 @@ class Part:
         self.constrain = False
 
         self.offset_pcb = False
+
+        self.screw_size = None
+        self.insert_module = None
 
 
 class Case:
@@ -70,3 +82,39 @@ class Case:
     def get_center(self):
         bounds = self.get_inner_bounds()
         return (bounds[0] + bounds[2]) / 2, (bounds[1] + bounds[3]) / 2
+
+    def _diam_to_screw(self, diameter):
+        sizes = {
+            'M1': 1,
+            'M2.5': 2.5,
+            'M3': 3,
+            'M4': 4,
+            'M4.5': 4.5,
+            'M5': 5,
+        }
+        distance = 100
+        best = None
+        screw_diam = 0
+        for size in sizes:
+            d = abs(diameter - sizes[size])
+            if d < distance:
+                distance = d
+                best = size
+                screw_diam = sizes[size]
+        return best, screw_diam
+
+    def get_inserts(self):
+        diameters = set()
+        for mount in self.pcb_mount:
+            diameters.add(mount.drill)
+            mount.insert = self._diam_to_screw(mount.drill)
+
+        for part in self.parts:
+            if part.screw_size is not None:
+                diameters.add(part.screw_size)
+                part.insert_module = self._diam_to_screw(part.screw_size)
+
+        result = set()
+        for d in diameters:
+            result.add(self._diam_to_screw(d))
+        return result

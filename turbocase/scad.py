@@ -54,7 +54,11 @@ module mount(drill, space, height) {
         difference() {
             cylinder(h=height, r=(space/2), center=true);
             cylinder(h=(height*2), r=(drill/2), center=true);
+            
+            translate([0, 0, height/2+0.01])
+                children();
         }
+        
 }
 
 module connector(min_x, min_y, max_x, max_y, height) {
@@ -107,6 +111,47 @@ def _make_outline_module(case):
     return result
 
 
+def _make_insert_parameters(insert):
+    result = f'/* [{insert[0]} screws] */\n'
+    result += '// Outer diameter for the insert\n'
+    # 0.77 is added partially as a sane-ish default, but also to force OpenSCAD to allow 2 positions of floating point
+    # precision in the customizer for this value
+    result += f'insert_{insert[0]}_diameter = {insert[1] + 0.77};\n'
+    result += '// Depth of the insert\n'
+    result += f'insert_{insert[0]}_depth = {insert[1] * 1.5};\n'
+    result += '\n'
+    return result
+
+
+def _make_insert_module(insert):
+    result = f'module Insert_{insert}() ' + '{\n'
+    result += f'    translate([0, 0, -insert_{insert}_depth])\n'
+    result += f'        cylinder(insert_{insert}_depth, insert_{insert}_diameter/2, insert_{insert}_diameter/2);\n'
+    result += '}\n\n'
+    return result
+
+
+def _make_part(part, indent, substract=False):
+    s = 'Substract: ' if substract else ''
+    result = f'{indent}// {s}{part.description}\n'
+    z = 'floor_height'
+    if part.offset_pcb:
+        z = 'pcb_top'
+    result += f'{indent}translate([{part.position[0]}, {part.position[1]}, {z}])\n'
+    if len(part.position) == 3:
+        result += f'{indent}rotate([0, 0, {-part.position[2]}])\n'
+    if substract:
+        result += f'{indent}    {part.substract};\n\n'
+    else:
+        if part.insert_module:
+            result += f'{indent}    {part.add}\n'
+            result += f'{indent}        Insert_{part.insert_module[0]}();\n\n'
+        else:
+            result += f'{indent}    {part.add};\n\n'
+
+    return result
+
+
 def generate(case, show_pcb=False):
     """
     :type case: Case
@@ -132,8 +177,11 @@ def generate(case, show_pcb=False):
     result += f'wall_thickness = {case.wall_thickness};\n'
     result += f'// Space between the top of the PCB and the top of the case\n'
     result += f'headroom = {max(case.max_connector_height, case.max_part_height - case.standoff_height - case.pcb_thickness)};\n'
-
     result += '\n'
+
+    for insert in case.get_inserts():
+        result += _make_insert_parameters(insert)
+
     result += '/* [Hidden] */\n'
     result += '$fa=$preview ? 10 : 4;\n'
     result += '$fs=0.2;\n'
@@ -147,6 +195,8 @@ def generate(case, show_pcb=False):
 
     result += _make_pcb_module(case)
     result += _make_outline_module(case)
+    for insert in case.get_inserts():
+        result += _make_insert_module(insert[0])
 
     center = case.get_center()
     result += f'rotate([render == "lid" ? 180 : 0, 0, 0])\n'
@@ -172,7 +222,6 @@ def generate(case, show_pcb=False):
             result += f'    #linear_extrude(floor_height+2, convexity=10) \n'
             result += f'        {_make_scad_polygon(shape.path())}\n'
 
-
     for shape in case.lid_holes:
         if shape.is_circle:
             result += f'    translate([{shape.point[0]}, {shape.point[1]}, inner_height])\n'
@@ -185,7 +234,6 @@ def generate(case, show_pcb=False):
             result += f'    linear_extrude(floor_height+2) \n'
             result += f'        {_make_scad_polygon(shape.path())}\n'
 
-
     for conn in sorted(case.connectors, key=lambda x: x.reference):
         result += f'    // {conn.reference} {conn.footprint} {conn.description}\n'
         result += f'    translate([{conn.position[0]}, {conn.position[1]}, pcb_top])\n' \
@@ -195,14 +243,8 @@ def generate(case, show_pcb=False):
     for part in case.parts:
         if part.substract is None:
             continue
-        z = 'floor_height'
-        if part.offset_pcb:
-            z = 'pcb_top'
-        result += f'    // {part.description}\n'
-        result += f'    translate([{part.position[0]}, {part.position[1]}, {z}])\n'
-        if len(part.position) == 3:
-            result += f'    rotate([0, 0, {-part.position[2]}])\n'
-        result += f'        {part.substract}\n'
+
+        result += _make_part(part, '    ', substract=True)
 
     result += '    }\n\n'
 
@@ -213,10 +255,11 @@ def generate(case, show_pcb=False):
 
     result += '    if (render == "all" || render == "case") {\n'
     for mount in case.pcb_mount:
-        result += f'        // {mount[3]}\n'
-        result += f'        translate([{mount[0][0]}, {mount[0][1]}, floor_height])\n'
+        result += f'        // {mount.ref} [{mount.insert}]\n'
+        result += f'        translate([{mount.position[0]}, {mount.position[1]}, floor_height])\n'
         # This currently creates correct holes for the M3 threaded metal inserts I have. Not generic
-        result += f'        mount({mount[1] + 0.2}, {mount[2]}, standoff_height);\n\n'
+        result += f'        mount({mount.drill}, {mount.size}, standoff_height)\n'
+        result += f'            Insert_{mount.insert[0]}();\n'
 
     has_constrained = False
     for part in case.parts:
@@ -236,15 +279,7 @@ def generate(case, show_pcb=False):
                 continue
             if part.add is None:
                 continue
-
-            z = 'floor_height'
-            if part.offset_pcb:
-                z = 'pcb_top'
-            result += f'            // {part.description}\n'
-            result += f'            translate([{part.position[0]}, {part.position[1]}, {z}])\n'
-            if len(part.position) == 3:
-                result += f'            rotate([0, 0, {-part.position[2]}])\n'
-            result += f'                {part.add}\n\n'
+            result += _make_part(part, '            ')
 
         result += '            }\n'
         result += '        }\n'
@@ -254,14 +289,7 @@ def generate(case, show_pcb=False):
             continue
         if part.constrain:
             continue
-        result += f'        // {part.description}\n'
-        z = 'floor_height'
-        if part.offset_pcb:
-            z = 'pcb_top'
-        result += f'        translate([{part.position[0]}, {part.position[1]}, {z}])\n'
-        if len(part.position) == 3:
-            result += f'        rotate([0, 0, {-part.position[2]}])\n'
-        result += f'            {part.add}\n\n'
+        result += _make_part(part, '        ')
 
     result += '    }\n'
     result += '}\n'

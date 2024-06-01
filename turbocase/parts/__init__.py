@@ -49,10 +49,13 @@ class BasePart:
                     continue
                 args.append(f'{var}={value}')
 
-        return f'{module_name}{suffix}(' + ', '.join(args) + ');'
+        return f'{module_name}{suffix}(' + ', '.join(args) + ')'
 
     def substract(self, footprint):
         return self.insert(footprint, suffix='_substract')
+
+    def get_screw_diameter(self):
+        return None
 
     @classmethod
     def make_footprint(cls):
