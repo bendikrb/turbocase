@@ -1,0 +1,34 @@
+(
+  footprint
+  "Cutout_Pinheader_02x09_254"
+  (version 20240108)
+  (generator turbocase)
+  (descr "Cutout for horizontal 2.54mm 22.86x5.08 pinheader")
+  (attr board_only exclude_from_pos_files exclude_from_bom allow_missing_courtyard)
+  (zone_connect 0)
+  (
+    fp_rect
+    (start -5.0 -11.43)
+    (end 5.0 11.43)
+    (
+      stroke
+      (width 0.2)
+      (type default)
+    )
+    (fill none)
+    (layer "User.6")
+    (uuid "7dcca01e-918c-4455-b4e7-cbdadbc777f0")
+  )
+  (
+    fp_line
+    (start -10 0)
+    (end 10 0)
+    (
+      stroke
+      (width 0.2)
+      (type default)
+    )
+    (layer "User.6")
+    (uuid "9a2202a7-f03f-441d-ac54-ce306711583b")
+  )
+)

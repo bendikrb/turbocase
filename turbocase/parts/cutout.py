@@ -80,3 +80,152 @@ class Cutout_HDMI_A(BasePart):
 class Cutout_HDMI_A_port(Cutout_HDMI_A):
     description = "Hole to fit the port of a HDMI-A connector"
     height = 6
+
+
+class Cutout_Pinheader(BasePart):
+    """
+    module Cutout_Pinheader_substract(width, height) {
+        translate([0, 0, height/2+0.1])
+            cube([10, width+0.2, height+0.2], center=true);
+    }
+    """
+    _substract = True
+    _add = False
+    _pcb_height = True
+    _hide = 'Cutout_Pinheader'
+    width = 2.54
+    height = 2.54
+    description = "Cutout for horizontal 2.54mm header"
+
+    @classmethod
+    def make_footprint(cls):
+        width = cls.width
+        length = 10
+        return [
+            # Outline
+            Rect('User.6', [-length / 2, -(width / 2)], [length / 2, width / 2]),
+            Line('User.6', [-length, 0], [length, 0]),
+        ]
+
+    def get_part_height(self):
+        return self.height
+
+
+class Cutout_Pinheader_01x01_254(Cutout_Pinheader):
+    width = 2.54 * 1
+    height = 2.54 * 1
+    description = f'Cutout for horizontal 2.54mm {width}x{height} pinheader'
+
+
+class Cutout_Pinheader_01x02_254(Cutout_Pinheader):
+    width = 2.54 * 2
+    height = 2.54 * 1
+    description = f'Cutout for horizontal 2.54mm {width}x{height} pinheader'
+
+
+class Cutout_Pinheader_01x03_254(Cutout_Pinheader):
+    width = 2.54 * 3
+    height = 2.54 * 1
+    description = f'Cutout for horizontal 2.54mm {width}x{height} pinheader'
+
+
+class Cutout_Pinheader_01x04_254(Cutout_Pinheader):
+    width = 2.54 * 4
+    height = 2.54 * 1
+    description = f'Cutout for horizontal 2.54mm {width}x{height} pinheader'
+
+
+class Cutout_Pinheader_01x05_254(Cutout_Pinheader):
+    width = 2.54 * 5
+    height = 2.54 * 1
+    description = f'Cutout for horizontal 2.54mm {width}x{height} pinheader'
+
+
+class Cutout_Pinheader_01x06_254(Cutout_Pinheader):
+    width = 2.54 * 6
+    height = 2.54 * 1
+    description = f'Cutout for horizontal 2.54mm {width}x{height} pinheader'
+
+
+class Cutout_Pinheader_01x07_254(Cutout_Pinheader):
+    width = 2.54 * 7
+    height = 2.54 * 1
+    description = f'Cutout for horizontal 2.54mm {width}x{height} pinheader'
+
+
+class Cutout_Pinheader_01x08_254(Cutout_Pinheader):
+    width = 2.54 * 8
+    height = 2.54 * 1
+    description = f'Cutout for horizontal 2.54mm {width}x{height} pinheader'
+
+
+class Cutout_Pinheader_01x09_254(Cutout_Pinheader):
+    width = 2.54 * 9
+    height = 2.54 * 1
+    description = f'Cutout for horizontal 2.54mm {width}x{height} pinheader'
+
+
+class Cutout_Pinheader_01x10_254(Cutout_Pinheader):
+    width = 2.54 * 10
+    height = 2.54 * 1
+    description = f'Cutout for horizontal 2.54mm {width}x{height} pinheader'
+
+
+class Cutout_Pinheader_02x01_254(Cutout_Pinheader):
+    width = 2.54 * 1
+    height = 2.54 * 2
+    description = f'Cutout for horizontal 2.54mm {width}x{height} pinheader'
+
+
+class Cutout_Pinheader_02x02_254(Cutout_Pinheader):
+    width = 2.54 * 2
+    height = 2.54 * 2
+    description = f'Cutout for horizontal 2.54mm {width}x{height} pinheader'
+
+
+class Cutout_Pinheader_02x03_254(Cutout_Pinheader):
+    width = 2.54 * 3
+    height = 2.54 * 2
+    description = f'Cutout for horizontal 2.54mm {width}x{height} pinheader'
+
+
+class Cutout_Pinheader_02x04_254(Cutout_Pinheader):
+    width = 2.54 * 4
+    height = 2.54 * 2
+    description = f'Cutout for horizontal 2.54mm {width}x{height} pinheader'
+
+
+class Cutout_Pinheader_02x05_254(Cutout_Pinheader):
+    width = 2.54 * 5
+    height = 2.54 * 2
+    description = f'Cutout for horizontal 2.54mm {width}x{height} pinheader'
+
+
+class Cutout_Pinheader_02x06_254(Cutout_Pinheader):
+    width = 2.54 * 6
+    height = 2.54 * 2
+    description = f'Cutout for horizontal 2.54mm {width}x{height} pinheader'
+
+
+class Cutout_Pinheader_02x07_254(Cutout_Pinheader):
+    width = 2.54 * 7
+    height = 2.54 * 2
+    description = f'Cutout for horizontal 2.54mm {width}x{height} pinheader'
+
+
+class Cutout_Pinheader_02x08_254(Cutout_Pinheader):
+    width = 2.54 * 8
+    height = 2.54 * 2
+    description = f'Cutout for horizontal 2.54mm {width}x{height} pinheader'
+
+
+class Cutout_Pinheader_02x09_254(Cutout_Pinheader):
+    width = 2.54 * 9
+    height = 2.54 * 2
+    description = f'Cutout for horizontal 2.54mm {width}x{height} pinheader'
+
+
+class Cutout_Pinheader_02x10_254(Cutout_Pinheader):
+    width = 2.54 * 10
+    height = 2.54 * 2
+    description = f'Cutout for horizontal 2.54mm {width}x{height} pinheader'
