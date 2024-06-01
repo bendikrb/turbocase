@@ -91,6 +91,8 @@ class Case:
             'M4': 4,
             'M4.5': 4.5,
             'M5': 5,
+            'M6': 6,
+            'M8': 8,
         }
         distance = 100
         best = None
