@@ -182,16 +182,37 @@ class LidClip(BasePart):
 
     module LidClip_lid() {
         size = 10;
-        hang = 0.6;
+        r = 0.4;
+        w = 0.99;
 
-        if(render == "lid") {
-            translate([0, 0, lid_model == "inner-fit" ? -headroom+4.5 : 0])
-            translate([0, size/2, inner_height-1]) {
-                translate([-hang+0.05,-size/2, -hang/2])
-                    cube([1+hang/2, size, hang], center=true);
+        translate([-0.2, 0, 0]) {
 
-                rotate([90, 0, 0])
-                    cylinder(size, hang, hang);
+            if(render == "lid") {
+                translate([0, 0, lid_model == "inner-fit" ? -headroom+4.5 : 0])
+                translate([0, -size/2, inner_height-1]) {
+                    translate([-w,0, -r])
+                        cube([w, size-(r*2), r*2]);
+
+                    translate([0, 0, 0])
+                        rotate([90, 0, 0])
+                        sphere(r);
+
+                    translate([-w, 0, 0])
+                        rotate([0, 90, 0])
+                        cylinder(w, r, r);
+
+                    translate([0, size-r*2, 0])
+                        rotate([90, 0, 0])
+                        sphere(r);
+
+                    translate([-w, size-r*2, 0])
+                        rotate([0, 90, 0])
+                        cylinder(w, r, r);
+
+
+                    rotate([-90, 0, 0])
+                        cylinder(size-(r*2), r, r);
+                }
             }
         }
     }
