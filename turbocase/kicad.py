@@ -357,7 +357,7 @@ def load_pcb(pcb_file, outline_layer=None, lid_layer=None):
                 else:
                     for prop in footprint['property']:
                         if len(prop) == 2 and prop[0] == 'Height':
-                            log.debug(f'Part with Height property set: {footprint[0]} is {prop[0]}mm tall')
+                            log.debug(f'Part with Height property set: {footprint[0]} is {prop[1]}mm tall')
                             connectors.append(footprint)
 
     log.debug('Sorting case outline shapes...')
