@@ -169,7 +169,7 @@ def generate(case, show_pcb=False):
     result += '// Lid mounting method\n'
     result += f'lid_model = "{case.lid_model}"; // [cap, inner-fit]\n'
     result += '// Conditional rendering\n'
-    result += f'render = "lid"; // [all, case, lid]\n'
+    result += f'render = "case"; // [all, case, lid]\n'
     result += '\n\n'
 
     result += '/* [Dimensions] */\n'
