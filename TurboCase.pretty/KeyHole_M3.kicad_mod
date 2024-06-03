@@ -3,7 +3,7 @@
   "KeyHole_M3"
   (version 20240108)
   (generator turbocase)
-  (descr "")
+  (descr "Keyhole wall mounting point")
   (attr board_only exclude_from_pos_files exclude_from_bom allow_missing_courtyard)
   (zone_connect 0)
   (

@@ -50,6 +50,7 @@ class KeyHole(BasePart):
     hole_diameter = 0
     head_diameter = 0
     head_height = 0
+    description = 'Keyhole wall mounting point'
 
     @classmethod
     def make_footprint(cls):
