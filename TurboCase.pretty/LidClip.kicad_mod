@@ -3,7 +3,7 @@
   "LidClip"
   (version 20240108)
   (generator turbocase)
-  (descr "Snap-in mount for a PCB edge")
+  (descr "Clip to snap the lid to the case, put this against the inside edge")
   (attr board_only exclude_from_pos_files exclude_from_bom allow_missing_courtyard)
   (zone_connect 0)
   (

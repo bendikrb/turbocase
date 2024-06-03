@@ -89,3 +89,38 @@ class Rect(Shape):
             (Symbol('layer'), self.layer),
             (Symbol('uuid'), uuid),
         )
+
+
+class Text(Shape):
+    def __init__(self, layer, position, text, size=1, thickness=0.1, justify_h=None, justify_v=None):
+        self.layer = layer
+        self.position = position
+        self.text = text
+        self.size = size
+        self.thickness = thickness
+        self.justify_h = justify_h or 'left'
+        self.justify_v = justify_v or 'bottom'
+
+    def graphic(self, uuid):
+
+        justify = []
+        if self.justify_h not in ['middle', 'center']:
+            justify.append(Symbol(self.justify_h))
+        if self.justify_v not in ['middle', 'center']:
+            justify.append(Symbol(self.justify_v))
+
+        return (
+            Symbol('fp_text'),
+            Symbol('user'),
+            self.text,
+            (Symbol('at'), *self.position),
+            (Symbol('effects'),
+             (Symbol('font'),
+              (Symbol('size'), self.size, self.size),
+              (Symbol('thickness'), self.thickness),
+              ),
+             (Symbol('justify'), *justify),
+             ),
+            (Symbol('layer'), self.layer),
+            (Symbol('uuid'), uuid),
+        )

@@ -38,7 +38,7 @@ def main():
     for name, mod in modules:
         defines = dict([(name, cls) for name, cls in mod.__dict__.items() if isinstance(cls, type)])
         for name in defines:
-            if name in ['BasePart', 'Rect', 'Circle', 'Shape', 'Line', 'Symbol', 'Arc']:
+            if name in ['BasePart', 'Rect', 'Circle', 'Shape', 'Line', 'Symbol', 'Arc', 'Text']:
                 continue
             if defines[name]._hide == name:
                 continue
