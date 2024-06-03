@@ -51,15 +51,23 @@ from `parts.py` into the final OpenSCAD file.
 ## Command line options
 
 ```
-usage: turbocase [-h] [--layer LAYER] [--bottom BOTTOM] [--wall WALL] pcb output
+usage: turbocase [-h] [--layer LAYER] [--lid-layer LID_LAYER] [--bottom BOTTOM] [--wall WALL] [--standoff STANDOFF] [--show-pcb SHOW_PCB] [--lid {cap,inner-fit}] [--verbose] [--debug] pcb output
 
 positional arguments:
-  pcb              Input kicad PCB file
-  output           Generated openSCAD case template
+  pcb                   Input kicad PCB file
+  output                Generated openSCAD case template
 
 options:
-  -h, --help       show this help message and exit
-  --layer LAYER    Layer with the case inner-outline [defaults to User.6]
-  --bottom BOTTOM  Bottom thickness in mm [default 1.2]
-  --wall WALL      Wall thickness in mm [default 1.2]
+  -h, --help            show this help message and exit
+  --layer LAYER         Layer with the case inner-outline [defaults to User.6]
+  --lid-layer LID_LAYER
+                        Layer with lid-specific holes [defaults to User.7]
+  --bottom BOTTOM       Bottom thickness in mm [default 1.2]
+  --wall WALL           Wall thickness in mm [default 1.2]
+  --standoff STANDOFF   Height generated for the PCB mounts in mm[default 5]
+  --show-pcb SHOW_PCB   Show the PCB placeholder by default [default false]
+  --lid {cap,inner-fit}
+                        Lid construction model
+  --verbose, -v         Show log messages
+  --debug               Display a lot of debugging info
 ```
