@@ -1,4 +1,5 @@
 import inspect
+import logging
 import os
 import sys
 from functools import total_ordering
@@ -307,6 +308,8 @@ def load_pcb(pcb_file, outline_layer=None, lid_layer=None):
     if lid_layer is None:
         lid_layer = 'User.7'
 
+    log = logging.getLogger('kicad')
+
     with open(pcb_file) as handle:
         pcb = sexpdata.load(handle)
 
@@ -318,7 +321,7 @@ def load_pcb(pcb_file, outline_layer=None, lid_layer=None):
     mountingholes = []
     connectors = []
     parts = []
-
+    log.debug('Extracting data from PCB file...')
     for symbol in pcb:
         if not isinstance(symbol, list):
             continue
@@ -333,30 +336,46 @@ def load_pcb(pcb_file, outline_layer=None, lid_layer=None):
                 for sub in symbol:
                     if isinstance(sub, list):
                         if sub[0].value() == 'layer' and sub[1] == outline_layer:
+                            log.debug(f'[{outline_layer}] {symbol[0]}')
                             outline_shapes.append(Sym(symbol))
                         if sub[0].value() == 'layer' and sub[1] == lid_layer:
+                            log.debug(f'[{lid_layer}] {symbol[0]}')
                             lid_shapes.append(Sym(symbol))
                         if sub[0].value() == 'layer' and sub[1] == 'Edge.Cuts':
+                            log.debug(f'[Edge.Cuts] {symbol[0]}')
                             edgecuts_shapes.append(Sym(symbol))
 
             if name == 'footprint':
                 footprint = Sym(symbol)
 
                 if ':MountingHole_' in footprint[0]:
+                    log.debug(f'Mounting hole detected: {footprint[0]}')
                     mountingholes.append(footprint)
                 elif 'TurboCase' in footprint[0]:
+                    log.debug(f'TurboCase footprint: {footprint[0]}')
                     parts.append(footprint)
                 else:
                     for prop in footprint['property']:
                         if len(prop) == 2 and prop[0] == 'Height':
+                            log.debug(f'Part with Height property set: {footprint[0]} is {prop[0]}mm tall')
                             connectors.append(footprint)
 
+    log.debug('Sorting case outline shapes...')
     outline = sort_outline(outline_shapes)
+    log.debug('Sorting edge-cut shapes...')
     edge_cuts = sort_outline(edgecuts_shapes)
+    log.debug('Sorting lid shapes...')
     lid = sort_outline(lid_shapes)
 
+    if len(outline) == 0:
+        log.critical(f'No case outline defined on [{outline_layer}]')
+
     path = outline[0].path()
-    result.pcb_path = edge_cuts[0].path()
+    if len(edge_cuts):
+        result.pcb_path = edge_cuts[0].path()
+    else:
+        log.warning("Could not load a PCB shape from the [Edge.Cuts] layer. No PCB preview will be available.")
+        result.pcb_path = []
     if len(edge_cuts) > 1:
         result.pcb_holes = edge_cuts[1:]
 
@@ -368,7 +387,7 @@ def load_pcb(pcb_file, outline_layer=None, lid_layer=None):
 
     for hole in mountingholes:
         center = hole['at'][:]
-
+        ref = hole.property['Reference']
         drill = 0
         drill_space = 0
         for pad in hole['pad']:
@@ -384,7 +403,9 @@ def load_pcb(pcb_file, outline_layer=None, lid_layer=None):
                 diam = max(circle['end'][0], circle['end'][1]) * 2
                 if diam > space:
                     space = diam
+            log.debug(f'Mounting hole [{ref}] margin diameter is {space} from circle graphic')
         else:
+            log.debug(f'Mounting hole [{ref}] margin diameter is {space} from pad dimensions')
             space = drill_space
         result.pcb_mount.append(Mount(hole.property['Reference'], center, drill, space))
         result.pcb_holes.append(Shape.make_circle(center, drill / 2))
@@ -405,7 +426,7 @@ def load_pcb(pcb_file, outline_layer=None, lid_layer=None):
                         shapes.append(line)
 
         if len(shapes) == 0:
-            sys.stderr.write(f"Could not process connector {ref}: no graphics on the F.Fab layer found\n")
+            log.error(f"Could not process connector {ref}: no graphics on the F.Fab layer found")
             continue
 
         c = Connector()
@@ -426,7 +447,7 @@ def load_pcb(pcb_file, outline_layer=None, lid_layer=None):
     for part in parts:
         part_id = part[0].split(':')[1]
         if part_id not in partlib:
-            sys.stderr.write(f"Unknown part: {part_id}\n")
+            log.error(f"Unknown part: {part_id}")
             continue
         partcls = partlib[part_id]
         modules.add(partcls.get_module())

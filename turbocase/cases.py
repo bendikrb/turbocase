@@ -81,6 +81,10 @@ class Case:
             max_y = max(max_y, point[1])
         return min_x, min_y, max_x, max_y
 
+    def get_case_size(self):
+        min_x, min_y, max_x, max_y = self.get_inner_bounds()
+        return max_x - min_x + (2 * self.wall_thickness), max_y - min_y + (2 * self.wall_thickness)
+
     def get_center(self):
         bounds = self.get_inner_bounds()
         return (bounds[0] + bounds[2]) / 2, (bounds[1] + bounds[3]) / 2
