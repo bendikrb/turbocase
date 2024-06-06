@@ -22,6 +22,7 @@ An example of a KiCAD PCB with a case outline on `User.6`:
 ![KiCAD PCB with case outline](images/kicad.png)
 
 The generated case from this file:
+
 ![OpenSCAD model of the generated case](images/scad.png)
 
 ## Installation
