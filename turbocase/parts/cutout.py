@@ -268,3 +268,31 @@ class Cutout_Neutrik_DSeries(BasePart):
 
     def get_part_height(self):
         return 26
+
+
+class Cutout_CUI_SJ1_353x(BasePart):
+    """
+    module Cutout_CUI_SJ1_353x_substract() {
+        r = 6.5/2;
+        translate([-5, 0, 7])
+        rotate([0, 90, 0])
+            cylinder(10, r, r);
+    }
+    """
+    _substract = True
+    _add = False
+    _pcb_height = True
+    description = "Chassis hole for a CUI SJ1-353x 3.5mm jack"
+
+    @classmethod
+    def make_footprint(cls):
+        width = 6.5
+        length = 10
+        return [
+            # Outline
+            Rect('User.6', [-length / 2, -(width / 2)], [length / 2, width / 2]),
+            Line('User.6', [-length, 0], [length, 0]),
+        ]
+
+    def get_part_height(self):
+        return 26

@@ -1,0 +1,34 @@
+(
+  footprint
+  "Cutout_CUI_SJ1_353x"
+  (version 20240108)
+  (generator turbocase)
+  (descr "Chassis hole for a CUI SJ1-353x 3.5mm jack")
+  (attr board_only exclude_from_pos_files exclude_from_bom allow_missing_courtyard)
+  (zone_connect 0)
+  (
+    fp_rect
+    (start -5.0 -3.25)
+    (end 5.0 3.25)
+    (
+      stroke
+      (width 0.2)
+      (type default)
+    )
+    (fill none)
+    (layer "User.6")
+    (uuid "1e3025b3-9c66-4cb3-ac50-fd3f21f6edec")
+  )
+  (
+    fp_line
+    (start -10 0)
+    (end 10 0)
+    (
+      stroke
+      (width 0.2)
+      (type default)
+    )
+    (layer "User.6")
+    (uuid "0fe14b38-af5f-485c-a342-6a1f0864296e")
+  )
+)
