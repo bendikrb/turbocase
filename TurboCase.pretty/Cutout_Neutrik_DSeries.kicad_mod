@@ -1,0 +1,51 @@
+(
+  footprint
+  "Cutout_Neutrik_DSeries"
+  (version 20240108)
+  (generator turbocase)
+  (descr "Chassis hole for a Neutrik D Series panel mount connector")
+  (attr board_only exclude_from_pos_files exclude_from_bom allow_missing_courtyard)
+  (zone_connect 0)
+  (
+    fp_rect
+    (start -5.0 -11.5)
+    (end 5.0 11.5)
+    (
+      stroke
+      (width 0.2)
+      (type default)
+    )
+    (fill none)
+    (layer "User.6")
+    (uuid "56a986bd-a026-4bfd-9773-7346401c79e4")
+  )
+  (
+    fp_line
+    (start -10 0)
+    (end 10 0)
+    (
+      stroke
+      (width 0.2)
+      (type default)
+    )
+    (layer "User.6")
+    (uuid "be427d10-0c84-416f-877c-99efce46090c")
+  )
+  (
+    fp_text
+    user
+    "D Series front"
+    (at -5.0 0 90)
+    (
+      effects
+      (
+        font
+        (size 1 1)
+        (thickness 0.1)
+      )
+      (justify bottom)
+    )
+    (layer "User.6")
+    (uuid "db643637-871f-44ac-8e2b-8d2e0fe1b31b")
+  )
+)

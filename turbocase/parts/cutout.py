@@ -1,5 +1,5 @@
 from turbocase.parts import BasePart
-from turbocase.parts.shape import Line, Circle, Arc, Rect
+from turbocase.parts.shape import Line, Circle, Arc, Rect, Text
 
 
 class Cutout_TypeC(BasePart):
@@ -229,3 +229,42 @@ class Cutout_Pinheader_02x10_254(Cutout_Pinheader):
     width = 2.54 * 10
     height = 2.54 * 2
     description = f'Cutout for horizontal 2.54mm {width}x{height} pinheader'
+
+
+class Cutout_Neutrik_DSeries(BasePart):
+    """
+    module Cutout_Neutrik_DSeries_substract() {
+        r = 22/2;
+        rs = 3.2/2;
+
+        translate([-5, 0, r+1.5])
+        rotate([0, 90, 0])
+            cylinder(10, r, r);
+
+        translate([-5, -19.8/2, 1.5+r+19.8/2])
+        rotate([0, 90, 0])
+            cylinder(10, rs, rs);
+
+        translate([-5, 19.8/2, 1.5+r-19.8/2])
+        rotate([0, 90, 0])
+            cylinder(10, rs, rs);
+    }
+    """
+    _substract = True
+    _add = False
+    _pcb_height = True
+    description = "Chassis hole for a Neutrik D Series panel mount connector"
+
+    @classmethod
+    def make_footprint(cls):
+        width = 23
+        length = 10
+        return [
+            # Outline
+            Rect('User.6', [-length / 2, -(width / 2)], [length / 2, width / 2]),
+            Line('User.6', [-length, 0], [length, 0]),
+            Text('User.6', [-length / 2, 0, 90], 'D Series front', justify_h='middle'),
+        ]
+
+    def get_part_height(self):
+        return 26
