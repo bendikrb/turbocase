@@ -1,7 +1,7 @@
 import argparse
 import logging
 
-from turbocase import scad
+from turbocase import scad, svg
 from turbocase.kicad import load_pcb
 
 
@@ -40,13 +40,17 @@ def main():
     parser.add_argument('--standoff', help='Height generated for the PCB mounts in mm[default 5]', default=5,
                         type=float)
     parser.add_argument('--show-pcb', help='Show the PCB placeholder by default [default false]', default=False,
-                        type=bool)
+                        action='store_true')
     parser.add_argument('--lid', help='Lid construction model', choices=['cap', 'inner-fit'], default='cap')
 
     parser.add_argument('--verbose', '-v', action='store_true', help='Show log messages')
     parser.add_argument('--debug', action='store_true', help='Display a lot of debugging info')
 
     args = parser.parse_args()
+
+    format = 'scad'
+    if args.output.endswith('.svg'):
+        format = 'svg'
 
     ch = logging.StreamHandler()
     ch.setFormatter(NiceLogFormatter())
@@ -81,9 +85,14 @@ def main():
     case.lid_model = args.lid
 
     log.info(f'Generating output at "{args.output}"')
-    code = scad.generate(case, show_pcb=args.show_pcb)
-    with open(args.output, 'w') as handle:
-        handle.write(code)
+    if format == 'scad':
+        code = scad.generate(case, show_pcb=args.show_pcb)
+        with open(args.output, 'w') as handle:
+            handle.write(code)
+    elif format == 'svg':
+        code = svg.generate(case, show_pcb=args.show_pcb)
+        with open(args.output, 'w') as handle:
+            handle.write(code)
 
 
 if __name__ == '__main__':

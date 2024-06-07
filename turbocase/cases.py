@@ -69,17 +69,23 @@ class Case:
         self.parts = []
         self.max_part_height = 0
 
-    def get_inner_bounds(self):
-        min_x = self.inner_path[0][0]
+    def get_path_bounds(self, path):
+        min_x = path[0][0]
         max_x = 0
-        min_y = self.inner_path[0][1]
+        min_y = path[0][1]
         max_y = 0
-        for point in self.inner_path:
+        for point in path:
             min_x = min(min_x, point[0])
             max_x = max(max_x, point[0])
             min_y = min(min_y, point[1])
             max_y = max(max_y, point[1])
         return min_x, min_y, max_x, max_y
+
+    def get_inner_bounds(self):
+        return self.get_path_bounds(self.inner_path)
+
+    def get_pcb_bounds(self):
+        return self.get_path_bounds(self.pcb_path)
 
     def get_case_size(self):
         min_x, min_y, max_x, max_y = self.get_inner_bounds()
