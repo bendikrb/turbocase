@@ -90,7 +90,7 @@ are [https://sr.ht/~martijnbraam/turbocase/](https://sr.ht/~martijnbraam/turboca
 and [https://codeberg.org/MartijnBraam/TurboCase](https://codeberg.org/MartijnBraam/TurboCase). Patches can be sent to
 Codeberg as a pull request or to sr.ht using [git-send-email](https://git-send-email.io/):
 
-```
+```shell-session
 $ git config sendemail.to "~martijnbraam/public-inbox@lists.sr.ht"
 $ git send-email HEAD^
 ```
