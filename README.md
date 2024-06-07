@@ -25,6 +25,16 @@ The generated case from this file:
 
 ![OpenSCAD model of the generated case](images/scad.png)
 
+## Features in summary
+
+* Generate a case from the shape defined on the `User.6` layer including holes for the bottom of the case.
+* Generate a lid that fits on the case automatically. Holes defined in the `User.7` layer will be cut out of the lid.
+* Generate mounting posts in the case that line up with the MountingHole footprints on the PCB
+* Add bounding boxes for any footprint on the PCB that has a `Height` property defined (shown in red above).
+* Automatically cut out the bounding boxes for those footprints from the case when clipping the walls.
+* There is a library of extra footprints that instruct TurboCase to add extra features to the case like shaped screw
+  holes and mounting posts for the lid.
+
 ## Installation
 
 ```shell-session
@@ -72,3 +82,18 @@ options:
   --verbose, -v         Show log messages
   --debug               Display a lot of debugging info
 ```
+
+## Contributing
+
+The official repositories for this project
+are [https://sr.ht/~martijnbraam/turbocase/](https://sr.ht/~martijnbraam/turbocase/)
+and [https://codeberg.org/MartijnBraam/TurboCase](https://codeberg.org/MartijnBraam/TurboCase). Patches can be sent to
+Codeberg as a pull request or to sr.ht using [git-send-email](https://git-send-email.io/):
+
+```
+$ git config sendemail.to "~martijnbraam/public-inbox@lists.sr.ht"
+$ git send-email HEAD^
+```
+
+If you'd like to support development of this project and several others like this financially consider contributing to
+my [Liberapay](https://liberapay.com/MartijnBraam) or [Patreon](https://www.patreon.com/martijnbraam).
