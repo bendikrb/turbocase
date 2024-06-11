@@ -387,7 +387,7 @@ def load_pcb(pcb_file, outline_layer=None, lid_layer=None):
 
     for hole in mountingholes:
         center = hole['at'][:]
-        ref = hole.property['Reference']
+        ref = hole.property['Reference'] if 'Reference' in hole.property else 'REF#'
         drill = 0
         drill_space = 0
         for pad in hole['pad']:
