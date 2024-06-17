@@ -1,8 +1,7 @@
 import inspect
 import logging
-import os
-import sys
 from functools import total_ordering
+import math
 
 import sexpdata
 
@@ -125,6 +124,16 @@ class Shape:
             end = tuple(graphic['end'][:])
             self.point = (start[0] + end[0]) / 2, (start[1] + end[1]) / 2
 
+    def _degrees(self, r):
+        deg = math.degrees(r) + 90
+        if deg < 0:
+            deg += 360
+        return deg % 360
+
+    def _frange(self, start, stop, step):
+        n_items = int(math.ceil((stop - start) / step))
+        return (start + i * step for i in range(n_items))
+
     def path(self):
         single = self.parts[0].name in ['gr_rect', 'gr_poly', 'gr_circle']
         path = []
@@ -154,28 +163,62 @@ class Shape:
             if item.name == 'gr_arc':
                 a = Vector(start[0], start[1])
                 b = Vector(end[0], end[1])
-
                 mid = Vector(item['mid'][0], item['mid'][1])
 
-                # Figure out the center of the arc
+                # Figure out the center and radius of the arc
                 v1 = (a + b) / 2 - mid
                 v2 = a - mid
                 cos_ang = (v1 * v2) / (v1.mag() * v2.mag())
-                radius = (v2.mag() / 2) / cos_ang
-
+                radius = round((v2.mag() / 2) / cos_ang, 5)
                 c = mid + (v1 / v1.mag()) * radius
+                c = Vector(round(c.x, 5), round(c.y, 5))
 
-                points = [a, mid, b]
-                newpoints = [a]
-                for i in range(1, len(points)):
-                    p1 = points[i - 1]
-                    p2 = points[i]
-                    dir = ((p1 + p2) / 2) - c
-                    p = c + (dir / dir.mag()) * radius
-                    newpoints.append(p)
-                    newpoints.append(p2)
+                # Calculate new points with the center at 0,0
+                a_c = a - c
+                b_c = b - c
+                m_c = mid - c
+                alpha_a = math.atan2(a_c.y, a_c.x)
+                alpha_b = math.atan2(b_c.y, b_c.x)
+                alpha_m = math.atan2(m_c.y, m_c.x)
+                deg_a = self._degrees(alpha_a)
+                deg_b = self._degrees(alpha_b)
+                deg_m = self._degrees(alpha_m)
 
-                if start == point:
+                # Swap angles to make them clockwise
+                if deg_a > deg_b:
+                    temp = deg_a
+                    deg_a = deg_b
+                    deg_b = temp
+                    temp = a
+                    a = b
+                    b = temp
+
+                # Swap around direction for big arcs
+                if deg_a < deg_m < deg_b:
+                    pass
+                else:
+                    temp = deg_a
+                    deg_a = deg_b
+                    deg_b = temp
+                    temp = a
+                    a = b
+                    b = temp
+
+                length = (deg_b - deg_a) % 360
+                num_points = int(abs(length) / 9) * max(int(radius / 3), 1)
+
+                newpoints = []
+                step = length / num_points
+                for deg in self._frange(0, length, step):
+                    deg += deg_a
+                    deg %= 360
+                    rad = math.radians(deg - 90)
+                    vec = Vector(round(math.cos(rad), 5), round(math.sin(rad), 5))
+                    newpoints.append((vec * radius) + c)
+                newpoints.append(b)
+
+                previous = Vector(point[0], point[1])
+                if (newpoints[0] - previous).mag() < (newpoints[-1] - previous).mag():
                     path.extend(newpoints[1:])
                 else:
                     path.extend(reversed(newpoints[:-1]))
