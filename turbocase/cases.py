@@ -70,6 +70,10 @@ class Case:
         self.max_part_height = 0
 
     def get_path_bounds(self, path):
+        if path[0] == 'circle':
+            radius = path[2]
+            pos = path[1]
+            return pos[0] - radius, pos[0] + radius, pos[1] - radius, pos[1] + radius
         min_x = path[0][0]
         max_x = 0
         min_y = path[0][1]

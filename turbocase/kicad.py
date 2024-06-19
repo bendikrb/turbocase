@@ -152,7 +152,7 @@ class Shape:
                 path.append((start[0], end[1]))
                 return path
             if part.name == 'gr_circle':
-                return [self.point]
+                return ['circle', self.point, self.radius]
 
         point = tuple(self.parts[0]['start'][:])
         path.append(point)

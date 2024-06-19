@@ -76,6 +76,9 @@ def esc(inp):
 
 
 def _make_scad_polygon(points):
+    if points[0] == 'circle':
+        return f'translate([{points[1][0]}, {points[1][0]}, 0]) circle(r={points[2]});'
+
     result = 'polygon(points = ['
     parts = []
     for p in points:
