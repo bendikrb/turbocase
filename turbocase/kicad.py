@@ -434,6 +434,8 @@ def load_pcb(pcb_file, outline_layer=None, lid_layer=None):
         drill = 0
         drill_space = 0
         for pad in hole['pad']:
+            if 'drill' not in pad:
+                continue
             if pad['drill'][0] > drill:
                 drill = pad['drill'][0]
                 drill_space = pad['size'][0]

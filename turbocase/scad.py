@@ -71,6 +71,10 @@ module connector(min_x, min_y, max_x, max_y, height) {
 """
 
 
+def esc(inp):
+    return inp.replace('.', '_')
+
+
 def _make_scad_polygon(points):
     result = 'polygon(points = ['
     parts = []
@@ -117,14 +121,15 @@ def _make_insert_parameters(insert):
     result += '// Outer diameter for the insert\n'
     # 0.77 is added partially as a sane-ish default, but also to force OpenSCAD to allow 2 positions of floating point
     # precision in the customizer for this value
-    result += f'insert_{insert[0]}_diameter = {insert[1] + 0.77};\n'
+    result += f'insert_{esc(insert[0])}_diameter = {insert[1] + 0.77};\n'
     result += '// Depth of the insert\n'
-    result += f'insert_{insert[0]}_depth = {insert[1] * 1.5};\n'
+    result += f'insert_{esc(insert[0])}_depth = {insert[1] * 1.5};\n'
     result += '\n'
     return result
 
 
 def _make_insert_module(insert):
+    insert = esc(insert)
     result = f'module Insert_{insert}() ' + '{\n'
     result += f'    translate([0, 0, -insert_{insert}_depth])\n'
     result += f'        cylinder(insert_{insert}_depth, insert_{insert}_diameter/2, insert_{insert}_diameter/2);\n'
@@ -265,7 +270,7 @@ def generate(case, show_pcb=False):
         result += f'        translate([{mount.position[0]}, {mount.position[1]}, floor_height])\n'
         # This currently creates correct holes for the M3 threaded metal inserts I have. Not generic
         result += f'        mount({mount.drill}, {mount.size}, standoff_height)\n'
-        result += f'            Insert_{mount.insert[0]}();\n'
+        result += f'            Insert_{esc(mount.insert[0])}();\n'
 
     has_constrained = False
     for part in case.parts:
