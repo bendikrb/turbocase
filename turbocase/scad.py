@@ -1,3 +1,5 @@
+import logging
+
 _template = """
 module wall (thickness, height) {
     linear_extrude(height, convexity=10) {
@@ -75,7 +77,12 @@ def esc(inp):
     return inp.replace('.', '_')
 
 
-def _make_scad_polygon(points):
+def _make_scad_polygon(points, label):
+    if len(points) == 0:
+        log = logging.getLogger('scad')
+        log.error(f'Shape "{label}" had no points')
+        return 'circle();'
+
     if points[0] == 'circle':
         return f'translate([{points[1][0]}, {points[1][0]}, 0]) circle(r={points[2]});'
 
@@ -94,7 +101,7 @@ def _make_pcb_module(case):
     result += '    color("#009900")\n'
     result += '    difference() {\n'
     result += f'        linear_extrude(thickness) ' + '{\n'
-    result += '            ' + _make_scad_polygon(case.pcb_path)
+    result += '            ' + _make_scad_polygon(case.pcb_path, 'edge.cuts')
     result += '        }\n'
     for shape in case.pcb_holes:
         if shape.is_circle:
@@ -106,7 +113,7 @@ def _make_pcb_module(case):
         else:
             result += f'    translate([0, 0, -1])\n'
             result += f'    linear_extrude(thickness+2) \n'
-            result += f'        {_make_scad_polygon(shape.path())}\n'
+            result += f'        {_make_scad_polygon(shape.path(), "pcb hole")}\n'
     result += '    }\n'
     result += '}\n\n'
     return result
@@ -114,7 +121,7 @@ def _make_pcb_module(case):
 
 def _make_outline_module(case):
     result = 'module case_outline() {\n'
-    result += '    ' + _make_scad_polygon(case.inner_path)
+    result += '    ' + _make_scad_polygon(case.inner_path, 'case outline')
     result += '}\n\n'
     return result
 
@@ -234,7 +241,7 @@ def generate(case, show_pcb=False):
         else:
             result += f'    translate([0, 0, -1])\n'
             result += f'    #linear_extrude(floor_height+2, convexity=10) \n'
-            result += f'        {_make_scad_polygon(shape.path())}\n'
+            result += f'        {_make_scad_polygon(shape.path(), "case cutout")}\n'
 
     for shape in case.lid_holes:
         if shape.is_circle:
@@ -246,7 +253,7 @@ def generate(case, show_pcb=False):
         else:
             result += f'    translate([0, 0, inner_height])\n'
             result += f'    linear_extrude(floor_height+2) \n'
-            result += f'        {_make_scad_polygon(shape.path())}\n'
+            result += f'        {_make_scad_polygon(shape.path(), "lid hole")}\n'
 
     for conn in sorted(case.connectors, key=lambda x: x.reference):
         result += f'    // {conn.reference} {conn.footprint} {conn.description}\n'
