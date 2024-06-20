@@ -284,7 +284,7 @@ def sort_outline(shapes):
 
     # No sorting needed since you can only have one poly as outline
     if shapes[0].name == 'gr_poly':
-        return shapes
+        return [Shape.from_single(shapes[0])]
 
     result = []
     unused = []
