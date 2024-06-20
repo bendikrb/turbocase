@@ -1,7 +1,7 @@
 from setuptools import setup
 
 setup(name='turbocase',
-      version='1.7.0',
+      version='1.7.1',
       description='Generate an OpenSCAD case template from a KiCAD PCB',
       url='https://turbocase.org',
       author='Martijn Braam',
