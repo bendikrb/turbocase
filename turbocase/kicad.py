@@ -236,7 +236,9 @@ class Shape:
     def bounds(self):
         if self._bounds is not None:
             return self._bounds
-
+        if self.is_circle:
+            c = self.point
+            return c[0] - self.radius, c[0] + self.radius, c[1] - self.radius, c[1] + self.radius
         coords = self.path()
         min_x = coords[0][0]
         max_x = 0
