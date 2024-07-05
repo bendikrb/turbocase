@@ -95,6 +95,17 @@ class Shape:
                                       [sexpdata.Symbol('layer'), layer],
                                       ]))
 
+    @classmethod
+    def make_rect(cls, start, end, layer=None):
+        if layer is None:
+            layer = 'User.6'
+
+        return Shape.from_single(Sym([sexpdata.Symbol('gr_rect'),
+                                      [sexpdata.Symbol('start'), start[0], start[1]],
+                                      [sexpdata.Symbol('end'), end[0], end[1]],
+                                      [sexpdata.Symbol('layer'), layer],
+                                      ]))
+
     def __init__(self):
         self.parts = []
         self.start = ()
@@ -420,7 +431,10 @@ def load_pcb(pcb_file, outline_layer=None, lid_layer=None):
     lid = sort_outline(lid_shapes)
 
     if len(outline) == 0:
-        log.critical(f'No case outline defined on [{outline_layer}]')
+        log.critical(f'No case outline defined on [{outline_layer}], making rectangular case from [Edge.Cuts]')
+        bb = edge_cuts[0].bounds()
+        outline.append(
+            Shape.make_rect(Vector(bb[0], bb[1]) - Vector(1, 1), Vector(bb[2], bb[3]) + Vector(1, 1)))
 
     path = outline[0].path()
     if len(edge_cuts):
