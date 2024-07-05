@@ -278,6 +278,13 @@ class Shape:
         return self.area < other.area
 
 
+def point_match(a, b):
+    # Match a coordinate with a margin of error
+    if abs(a[0] - b[0]) < 0.001 and abs(a[1] - b[1]) < 0.001:
+        return True
+    return False
+
+
 def sort_outline(shapes):
     if len(shapes) == 0:
         return []
@@ -308,10 +315,10 @@ def sort_outline(shapes):
         for i, item in enumerate(unused):
             start = tuple(item['start'][:])
             end = tuple(item['end'][:])
-            if start == shape.point:
+            if point_match(start, shape.point):
                 new_point = end
                 break
-            if end == shape.point:
+            if point_match(end, shape.point):
                 new_point = start
                 break
         else:
