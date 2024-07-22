@@ -1,5 +1,7 @@
+import base64
 import inspect
 import logging
+import zlib
 from functools import total_ordering
 import math
 
@@ -422,6 +424,9 @@ def load_pcb(pcb_file, outline_layer=None, lid_layer=None):
                         if len(prop) == 2 and prop[0] == 'Height':
                             log.debug(f'Part with Height property set: {footprint[0]} is {prop[1]}mm tall')
                             connectors.append(footprint)
+                        if len(prop) == 2 and prop[0] == 'TurboCaseModule':
+                            log.debug(f'Part with embedded OpenSCAD model: {footprint[0]}')
+                            parts.append(footprint)
 
     log.debug('Sorting case outline shapes...')
     outline = sort_outline(outline_shapes)
@@ -513,28 +518,53 @@ def load_pcb(pcb_file, outline_layer=None, lid_layer=None):
     partlib = get_all_parts()
 
     for part in parts:
-        part_id = part[0].split(':')[1]
-        if part_id not in partlib:
-            log.error(f"Unknown part: {part_id}")
-            continue
-        partcls = partlib[part_id]
-        modules.add(partcls.get_module())
-
-        inst = partcls()
-
         p = Part()
-        p.description = inst.description
-        if inst._add:
-            p.add = inst.insert(part)
-        if inst._substract:
-            p.substract = inst.substract(part)
-        if inst._lid:
-            p.lid = inst.lid(part)
-        p.constrain = inst._constrain
         p.position = part.attr['at'][:]
-        p.offset_pcb = inst._pcb_height
-        p.screw_size = inst.get_screw_diameter()
-        ph = inst.get_part_height()
+        ph = None
+        if 'TurboCaseModule' in part.property:
+            # Part with embedded OpenSCAD code
+
+            # Decompress the module code from the property
+            modules.add(zlib.decompress(base64.b64decode(part.property['TurboCaseModule'])).decode())
+
+            p.description = part.property['Description'] if 'Description' in part.property else ''
+            if p.description.strip() == "":
+                p.description = part.property['Footprint'] if 'Footprint' in part.property else 'Unknown'
+
+            if 'TurboCaseAdd' in part.property:
+                p.add = part.property['TurboCaseAdd']
+            if 'TurboCaseSub' in part.property:
+                p.substract = part.property['TurboCaseSub']
+            if 'TurboCaseLid' in part.property:
+                p.lid = part.property['TurboCaseLid']
+            p.constrain = bool(part.property['TurboCaseConstrain']) if 'TurboCaseConstrain' in part.property else False
+            p.offset_pcb = bool(part.property['TurboCaseOffsetPCB']) if 'TurboCaseOffsetPCB' in part.property else False
+            p.screw_size = float(part.property['TurboCaseScrewSize']) if 'TurboCaseScrewSize' in part.property else None
+            if 'TurboCaseHeight' in part.property:
+                ph = float(part.property['TurboCaseHeight'])
+        else:
+            # Part from the embedded Python library
+            part_id = part[0].split(':')[1]
+            if part_id not in partlib:
+                log.error(f"Unknown part: {part_id}")
+                continue
+            partcls = partlib[part_id]
+            modules.add(partcls.get_module())
+
+            inst = partcls()
+
+            p.description = inst.description
+            if inst._add:
+                p.add = inst.insert(part)
+            if inst._substract:
+                p.substract = inst.substract(part)
+            if inst._lid:
+                p.lid = inst.lid(part)
+            p.constrain = inst._constrain
+            p.offset_pcb = inst._pcb_height
+            p.screw_size = inst.get_screw_diameter()
+            ph = inst.get_part_height()
+
         if ph is not None:
             if p.offset_pcb:
                 ph += result.pcb_thickness + result.standoff_height
