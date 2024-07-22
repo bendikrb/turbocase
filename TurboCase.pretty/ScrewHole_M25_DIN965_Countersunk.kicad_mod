@@ -7,6 +7,60 @@
   (attr board_only exclude_from_pos_files exclude_from_bom allow_missing_courtyard)
   (zone_connect 0)
   (
+    property
+    "TurboCaseModule"
+    "eJytUbEOwiAU3PsVjCXFCqwdXdwdjWkqvAqxpQmlMcb034VGY2vQxMTbuHfc8Y62k0MDaCcsXLZdA5tuMA5sP5hz2Q/H3tlKuFT5SSl11YKfEaSgku9HBfqkHEa3BHn4a6ZvKgfpnhJKVjNJxnJ+wJMqQFwbbSTYdCYhaJm45jijOQ/0PPlB4yKJZaIVo7Ecxr/YR+hgPybt555+b0fqugYLRkD6pJZPjG3K4gWwVwEBf/vIYrIc/ep3JLawMQ=="
+    (at 0 0 0)
+    (unlocked yes)
+    (layer "F.SilkS")
+    (hide yes)
+    (uuid "31ccf141-d8dc-48ae-9b8a-1b7c298fa16b")
+    (
+      effects
+      (
+        font
+        (size 1 1)
+        (thickness 0.1)
+      )
+    )
+  )
+  (
+    property
+    "TurboCaseAdd"
+    "ScrewHoleCountersunk(hole_diameter=2.5, head_diameter=4.7, head_height=1.5)"
+    (at 0 0 0)
+    (unlocked yes)
+    (layer "F.SilkS")
+    (hide yes)
+    (uuid "981454b9-daab-46d5-88dd-d45e9b50b3a6")
+    (
+      effects
+      (
+        font
+        (size 1 1)
+        (thickness 0.1)
+      )
+    )
+  )
+  (
+    property
+    "TurboCaseSub"
+    "ScrewHoleCountersunk_substract(hole_diameter=2.5, head_diameter=4.7, head_height=1.5)"
+    (at 0 0 0)
+    (unlocked yes)
+    (layer "F.SilkS")
+    (hide yes)
+    (uuid "05fea694-9a75-4e95-8edd-fa02b51f6678")
+    (
+      effects
+      (
+        font
+        (size 1 1)
+        (thickness 0.1)
+      )
+    )
+  )
+  (
     fp_circle
     (center 0 0)
     (end 0 1.25)

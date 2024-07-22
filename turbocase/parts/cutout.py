@@ -1,3 +1,4 @@
+""" Ready to use connector cutouts for connectors with complicated shapes """
 from turbocase.parts import BasePart
 from turbocase.parts.shape import Line, Circle, Arc, Rect, Text
 

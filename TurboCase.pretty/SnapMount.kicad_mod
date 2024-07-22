@@ -7,6 +7,42 @@
   (attr board_only exclude_from_pos_files exclude_from_bom allow_missing_courtyard)
   (zone_connect 0)
   (
+    property
+    "TurboCaseModule"
+    "eJyFUF1vgyAUffdX8KhRV+z2sKbpT9jTHhtjqN6KqQMDmLZb+t93EcS5PYwQuB/nHg7nQzZjD+RdsOFNjsLECfmKCC7dfQI5kOe9y7BfrUuciRYz+vSyjxzGYKoNE408nysOXctNOtSnyvCuvgjQOi08G/8P6XFXxBWLggEUFo5HmtEyI3ghiQ30dYlSqwtTHhohomXpuJQ0zEBsCXAXr7RMprpRTOh+btnv5m5uNuUXKA+2bLYZyW0woQN2fmjnXtr97PWdAKYquBk1NhAHqgVh1yD7eytF7L+feK//qp3MWDm62ZZrrno8Idap9Od6Ao2qQRhQB9QEiTPrET2ib2BNn+Q="
+    (at 0 0 0)
+    (unlocked yes)
+    (layer "F.SilkS")
+    (hide yes)
+    (uuid "b7948e33-6d17-410d-814f-0f42234dff63")
+    (
+      effects
+      (
+        font
+        (size 1 1)
+        (thickness 0.1)
+      )
+    )
+  )
+  (
+    property
+    "TurboCaseAdd"
+    "SnapMount()"
+    (at 0 0 0)
+    (unlocked yes)
+    (layer "F.SilkS")
+    (hide yes)
+    (uuid "56c35953-5ae8-44fd-9421-cacb906e72dd")
+    (
+      effects
+      (
+        font
+        (size 1 1)
+        (thickness 0.1)
+      )
+    )
+  )
+  (
     fp_line
     (start -3 0)
     (end 3 0)

@@ -7,6 +7,78 @@
   (attr board_only exclude_from_pos_files exclude_from_bom allow_missing_courtyard)
   (zone_connect 0)
   (
+    property
+    "TurboCaseModule"
+    "eJw1jEEKgzAQRfc5xSwNDTa6FVe9gPsiEpOhCdgIyQxdlN69o+BbfXiP/94DbwgPpp1pmVKO6AKWpfJaqThPzScFigYiplckDV8FgqhcN0fYPK0Be+l7f7NtN+uzOfC8StJJcN6I7a/22LMBj5mwjFQY9aB+6g/Svi1i"
+    (at 0 0 0)
+    (unlocked yes)
+    (layer "F.SilkS")
+    (hide yes)
+    (uuid "5ed96a65-af21-4bfc-b72a-5615b263261b")
+    (
+      effects
+      (
+        font
+        (size 1 1)
+        (thickness 0.1)
+      )
+    )
+  )
+  (
+    property
+    "TurboCaseSub"
+    "Cutout_Pinheader_substract(width=12.7, height=2.54)"
+    (at 0 0 0)
+    (unlocked yes)
+    (layer "F.SilkS")
+    (hide yes)
+    (uuid "175ccb06-d562-4f26-a1d5-b7f6e82ae890")
+    (
+      effects
+      (
+        font
+        (size 1 1)
+        (thickness 0.1)
+      )
+    )
+  )
+  (
+    property
+    "TurboCaseOffsetPCB"
+    "yes"
+    (at 0 0 0)
+    (unlocked yes)
+    (layer "F.SilkS")
+    (hide yes)
+    (uuid "439cedbc-a96c-401d-a102-9b12bae88b40")
+    (
+      effects
+      (
+        font
+        (size 1 1)
+        (thickness 0.1)
+      )
+    )
+  )
+  (
+    property
+    "TurboCaseHeight"
+    "2.54"
+    (at 0 0 0)
+    (unlocked yes)
+    (layer "F.SilkS")
+    (hide yes)
+    (uuid "a68b51c6-4ddc-421a-9dfa-2921d9a7da51")
+    (
+      effects
+      (
+        font
+        (size 1 1)
+        (thickness 0.1)
+      )
+    )
+  )
+  (
     fp_rect
     (start -5.0 -6.35)
     (end 5.0 6.35)

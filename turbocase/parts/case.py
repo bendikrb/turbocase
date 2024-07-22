@@ -1,3 +1,4 @@
+""" Generic case structural parts """
 from turbocase.parts import BasePart
 from turbocase.parts.shape import Line, Circle, Arc, Rect
 

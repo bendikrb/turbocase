@@ -7,6 +7,96 @@
   (attr board_only exclude_from_pos_files exclude_from_bom allow_missing_courtyard)
   (zone_connect 0)
   (
+    property
+    "TurboCaseModule"
+    "eJylkktuwyAQhvc+BUu7tRM726qrHKOKIgLjGgmDxGPRVrl7hsSkgNwqVUeWDGge3/wzs+ZeAtlTC3ttFJjaik9oyaQlHLmgMzgweAXKy+sE4n1yDfmqCJozVFlJHdRvfUvw60aptVm8Ds3ViYtxBAOKQR3jgnkltMpegrEPKRRHIqGQa0nUksC33cV/85LFJBTdrREkSeO3uwUlq+RPGBD8n5bEedChJQwUdv7qjIek5Lm6H1dpn4dCyQBePGC6agX/JuKKhtG+R3a0/mQxlLk/D++32lkj/aYfCgA2CclxmHXMcq5Qj7lcqH/Q/bRa/WZAmGRd1sVPxXtoDo9JkabtEtxSnsiUuKxRpO3fKYKUF3ygHxc="
+    (at 0 0 0)
+    (unlocked yes)
+    (layer "F.SilkS")
+    (hide yes)
+    (uuid "38fd8eb6-0906-4c2a-b868-2fe35f789efd")
+    (
+      effects
+      (
+        font
+        (size 1 1)
+        (thickness 0.1)
+      )
+    )
+  )
+  (
+    property
+    "TurboCaseAdd"
+    "CaseCorner(size=5.6, hole_diameter=3, head_diameter=5.6, head_height=1.65)"
+    (at 0 0 0)
+    (unlocked yes)
+    (layer "F.SilkS")
+    (hide yes)
+    (uuid "7ada352d-2dc3-4dcd-ad52-c3273a0cfbd2")
+    (
+      effects
+      (
+        font
+        (size 1 1)
+        (thickness 0.1)
+      )
+    )
+  )
+  (
+    property
+    "TurboCaseSub"
+    "CaseCorner_substract(size=5.6, hole_diameter=3, head_diameter=5.6, head_height=1.65)"
+    (at 0 0 0)
+    (unlocked yes)
+    (layer "F.SilkS")
+    (hide yes)
+    (uuid "991c30ee-82b3-4ecb-8ce7-f2a2f9249f85")
+    (
+      effects
+      (
+        font
+        (size 1 1)
+        (thickness 0.1)
+      )
+    )
+  )
+  (
+    property
+    "TurboCaseConstrain"
+    "yes"
+    (at 0 0 0)
+    (unlocked yes)
+    (layer "F.SilkS")
+    (hide yes)
+    (uuid "9cd0adbc-a2d7-49ee-8411-bd06a043e808")
+    (
+      effects
+      (
+        font
+        (size 1 1)
+        (thickness 0.1)
+      )
+    )
+  )
+  (
+    property
+    "TurboCaseScrewSize"
+    "3"
+    (at 0 0 0)
+    (unlocked yes)
+    (layer "F.SilkS")
+    (hide yes)
+    (uuid "cbe10f35-3463-4c04-aa72-ec5cb4643c27")
+    (
+      effects
+      (
+        font
+        (size 1 1)
+        (thickness 0.1)
+      )
+    )
+  )
+  (
     fp_circle
     (center 0 0)
     (end 0 1.5)

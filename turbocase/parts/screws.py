@@ -1,3 +1,4 @@
+""" Holes for metric screws """
 from turbocase.parts import BasePart
 from turbocase.parts.shape import Circle
 

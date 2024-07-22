@@ -1,3 +1,4 @@
+""" Battery mounting parts """
 from turbocase.parts import BasePart
 from turbocase.parts.shape import Rect, Text
 

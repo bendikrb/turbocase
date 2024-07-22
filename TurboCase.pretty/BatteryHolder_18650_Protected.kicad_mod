@@ -7,6 +7,60 @@
   (attr board_only exclude_from_pos_files exclude_from_bom allow_missing_courtyard)
   (zone_connect 0)
   (
+    property
+    "TurboCaseModule"
+    "eJy9ld1ugyAUx+99Ci5RxIJL1yxNb7abvcPSLH7QzsTignixLH33HVFWndXapRvxggOc//kBh+OhSKtcoMdIa6E+nos8Fer16SPPZKqyJMpxmkUHAXM+yoXc6zcXfToIWmOhTdtZcIYI4mszFxcKZGDuLli2IyVY7exeZe8bHjZGmu12QgmZCGyV61bJrJC9kYnFtiVVLPCLBSY49OLStdzGNFwwZNcswq27dgZCqtCRBin6wHxUf1t3sEarSJa5WXZSI3HpI4pPAxCrCXpGITGnLBRuALtU3b677nke+7jjGKy/zZ7XpQ1+ozXwE2gzYdo7GMr9GdiZ8+rggTRlAWPLk5fHgtXyZ7iZGUVAi4+m1fixNO5d9kkAg3jOy+PBauujREgwNlpV4rr4ZOR+/peGzbkMbiNeiHdlTnrhLYPPjl4bg0ymfDoNrUcjQXFdUL2wU9Z+nwrEiMEDgtdxfwWTb6o65UF4CwpqKQgIwm9lWCBvgVO7HZ2j8wXD6QFo"
+    (at 0 0 0)
+    (unlocked yes)
+    (layer "F.SilkS")
+    (hide yes)
+    (uuid "29ec9c1b-662d-4259-a612-6ded437be0b8")
+    (
+      effects
+      (
+        font
+        (size 1 1)
+        (thickness 0.1)
+      )
+    )
+  )
+  (
+    property
+    "TurboCaseAdd"
+    "BatteryHolder_Cylindrical(diameter=18, length=700)"
+    (at 0 0 0)
+    (unlocked yes)
+    (layer "F.SilkS")
+    (hide yes)
+    (uuid "2813e530-b095-4e70-8abb-1c1e96e787e8")
+    (
+      effects
+      (
+        font
+        (size 1 1)
+        (thickness 0.1)
+      )
+    )
+  )
+  (
+    property
+    "TurboCaseHeight"
+    "18.5"
+    (at 0 0 0)
+    (unlocked yes)
+    (layer "F.SilkS")
+    (hide yes)
+    (uuid "aa5fb3ff-0e16-4dc9-b53c-832c0991c010")
+    (
+      effects
+      (
+        font
+        (size 1 1)
+        (thickness 0.1)
+      )
+    )
+  )
+  (
     fp_rect
     (start 0 0)
     (end 20 78.0)

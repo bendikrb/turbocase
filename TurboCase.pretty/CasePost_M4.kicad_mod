@@ -7,6 +7,60 @@
   (attr board_only exclude_from_pos_files exclude_from_bom allow_missing_courtyard)
   (zone_connect 0)
   (
+    property
+    "TurboCaseModule"
+    "eJylUMsOgyAQvPMVHDHah7322B/o3RhDZakkCAngoW3890qqFu0rphsSspud2ZmpNWsk4AO1cNTWESuukOBKSyiYoDU4MF0LlM3bCsS5chG+IdwVE5yDAVUCGUa+yosUioEhQikwPSbB/shmN/zR/vt+nM4EeehsEHAMVgrbnKwztFxu6kHWohaheprPH6R9LB1YWUkdkGybYP/WaZr/DC3mUutnggvyeDn4kXYVyM2jkWCiKVh5pyK0P6rwQd4BUmPLDQ=="
+    (at 0 0 0)
+    (unlocked yes)
+    (layer "F.SilkS")
+    (hide yes)
+    (uuid "8b43ce5a-3883-4ca9-968d-830ad11e1c30")
+    (
+      effects
+      (
+        font
+        (size 1 1)
+        (thickness 0.1)
+      )
+    )
+  )
+  (
+    property
+    "TurboCaseAdd"
+    "CasePost(size=7.5, hole_diameter=4, head_diameter=7.5, head_height=2.2)"
+    (at 0 0 0)
+    (unlocked yes)
+    (layer "F.SilkS")
+    (hide yes)
+    (uuid "bfd2ac8d-9c44-4f92-803d-3d1d53583aae")
+    (
+      effects
+      (
+        font
+        (size 1 1)
+        (thickness 0.1)
+      )
+    )
+  )
+  (
+    property
+    "TurboCaseSub"
+    "CasePost_substract(size=7.5, hole_diameter=4, head_diameter=7.5, head_height=2.2)"
+    (at 0 0 0)
+    (unlocked yes)
+    (layer "F.SilkS")
+    (hide yes)
+    (uuid "c51433c1-9379-440d-b498-54cd950ac841")
+    (
+      effects
+      (
+        font
+        (size 1 1)
+        (thickness 0.1)
+      )
+    )
+  )
+  (
     fp_circle
     (center 0 0)
     (end 0 2.0)
